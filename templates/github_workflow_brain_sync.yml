@@ -1,0 +1,35 @@
+name: Sync Shapelab Brain (.shapelab)
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-brain:
+    name: Atualizar submódulo .shapelab via Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Repositório com Submódulo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Atualizar submódulo .shapelab para o HEAD remoto
+        run: |
+          git submodule sync -- .shapelab
+          git submodule update --remote .shapelab
+
+      - name: Abrir Pull Request se houver atualização no Brain
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(brain): sync .shapelab submodule"
+          title: "chore(brain): sincronizar .shapelab"
+          body: "Atualização automática do submódulo `.shapelab` a partir do repositório central `cleudsonx/shapelab-brain`."
+          branch: chore/brain-sync
+          delete-branch: true
