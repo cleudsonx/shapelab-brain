@@ -39,6 +39,34 @@ elif [[ "$MODE" == "contribute" ]]; then
       echo "Nenhuma alteração pendente em .shapelab."
       exit 0
     fi
+
+    STAGED_FILES="$(git diff --cached --name-only)"
+    if echo "$STAGED_FILES" | grep -Eq '^(skills/|agents/|memory/|CORE_CONSTITUTION\.md$)'; then
+      NEW_VER="$(tr -d ' \r\n' < VERSION)"
+      if [[ ! "$NEW_VER" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        git reset >/dev/null
+        echo "Erro: VERSION inválido ('$NEW_VER'). Esperado SemVer X.Y.Z." >&2
+        exit 1
+      fi
+
+      OLD_VER="$(git show HEAD:VERSION 2>/dev/null | tr -d ' \r\n' || true)"
+      if [[ -n "$OLD_VER" && "$OLD_VER" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        IFS='.' read -r n_maj n_min n_pat <<< "$NEW_VER"
+        IFS='.' read -r o_maj o_min o_pat <<< "$OLD_VER"
+        if (( n_maj < o_maj || (n_maj == o_maj && n_min < o_min) || (n_maj == o_maj && n_min == o_min && n_pat <= o_pat) )); then
+          git reset >/dev/null
+          echo "Erro: alterações em skills/, agents/, memory/ ou CORE_CONSTITUTION.md exigem incremento de VERSION ($OLD_VER -> maior)." >&2
+          exit 1
+        fi
+      fi
+
+      if ! grep -Fq "## [$NEW_VER]" CHANGELOG.md; then
+        git reset >/dev/null
+        echo "Erro: CHANGELOG.md deve conter a seção '## [$NEW_VER]'." >&2
+        exit 1
+      fi
+    fi
+
     git commit -m "$MESSAGE"
     git push origin main
   )

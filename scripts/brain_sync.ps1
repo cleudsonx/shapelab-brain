@@ -6,6 +6,23 @@
 
 $ErrorActionPreference = "Stop"
 
+function Test-SemVerTuple {
+    param([string]$Version)
+    if ($Version -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+        return $null
+    }
+    return @([int]$Matches[1], [int]$Matches[2], [int]$Matches[3])
+}
+
+function Compare-SemVerGreater {
+    param([int[]]$NewVer, [int[]]$OldVer)
+    for ($i = 0; $i -lt 3; $i++) {
+        if ($NewVer[$i] -gt $OldVer[$i]) { return $true }
+        if ($NewVer[$i] -lt $OldVer[$i]) { return $false }
+    }
+    return $false
+}
+
 # Encontra a raiz do repositório produto
 $repoRoot = (git rev-parse --show-toplevel 2>$null)
 if (-not $repoRoot) {
@@ -49,6 +66,43 @@ elseif ($Mode -eq "contribute") {
             Write-Host "Nenhuma alteração pendente em .shapelab para enviar." -ForegroundColor Yellow
             exit 0
         }
+
+        $stagedFiles = @(git diff --cached --name-only)
+        $requiresVersionBump = $false
+        foreach ($file in $stagedFiles) {
+            if ($file -match '^(skills/|agents/|memory/|CORE_CONSTITUTION\.md$)') {
+                $requiresVersionBump = $true
+                break
+            }
+        }
+
+        if ($requiresVersionBump) {
+            $newVersion = (Get-Content -Path "VERSION" -Raw -Encoding UTF8).Trim()
+            $newTuple = Test-SemVerTuple -Version $newVersion
+            if (-not $newTuple) {
+                git reset | Out-Null
+                Write-Error "VERSION inválido ('$newVersion'). Esperado SemVer X.Y.Z."
+                exit 1
+            }
+
+            $oldVersion = (git show HEAD:VERSION 2>$null)
+            if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($oldVersion)) {
+                $oldTuple = Test-SemVerTuple -Version $oldVersion.Trim()
+                if ($oldTuple -and -not (Compare-SemVerGreater -NewVer $newTuple -OldVer $oldTuple)) {
+                    git reset | Out-Null
+                    Write-Error "Contribuição recusada: alterações em skills/, agents/, memory/ ou CORE_CONSTITUTION.md exigem incremento de VERSION ($($oldVersion.Trim()) -> maior)."
+                    exit 1
+                }
+            }
+
+            $changelogContent = Get-Content -Path "CHANGELOG.md" -Raw -Encoding UTF8
+            if ($changelogContent -notmatch [regex]::Escape("## [$newVersion]")) {
+                git reset | Out-Null
+                Write-Error "Contribuição recusada: CHANGELOG.md deve conter a seção '## [$newVersion]'."
+                exit 1
+            }
+        }
+
         git commit -m $Message
         git push origin main
         if ($LASTEXITCODE -ne 0) {

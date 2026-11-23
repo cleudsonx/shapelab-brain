@@ -2,6 +2,11 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.2.1] - 2026-11-22
+### Adicionado
+- Workflow `.github/workflows/release.yml` para validar incremento SemVer de `VERSION` + presença de seção correspondente no `CHANGELOG.md` em PRs/pushes na `main`, criando automaticamente a tag `vX.Y.Z` e publicando a GitHub Release.
+- Trava de versionamento no modo `contribute` de `scripts/brain_sync.ps1` e `scripts/brain_sync.sh`, bloqueando envios que alterem `skills/`, `agents/`, `memory/` ou `CORE_CONSTITUTION.md` sem incremento válido de `VERSION` e entrada no `CHANGELOG.md`.
+
 ## [2.2.0] - 2026-11-22
 ### Adicionado
 - Nova skill oficial `skills/devops/versioning_and_ota_update.md` (unificando versionamento monotônico `YYYYMMDDNN`, anti-cache `initAssetCacheGuard`, detector OTA `PwaUpdateWrapper`, GC do Firebase Hosting e `SemVer+build.<run>.<sha>` para backends).
