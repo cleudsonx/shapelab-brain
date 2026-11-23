@@ -2,27 +2,27 @@
 document_type: system_blueprint
 repository: shapelab-brain
 organization: Shapelab (shapelab.ia.br)
-version: 2.2.0
+version: 2.3.0
 date: 2026-11-22
-compatible_agents: [Google Antigravity, Gemini Pro, ShapeLab Squad (cleudson-devkit)]
+compatible_agents: [Google Antigravity, Gemini Pro, ShapeLab Squad (shapelab-os)]
 target_products:
   - "Mr. Coach (repo local: B2B-personal-ia)"
   - "ReformAI (repo local: ReformAI)"
   - "Smart EV Hub (repo local: Smart-EV-Hub)"
   - "Tattoo SaaS (planejado)"
 core_stack: [Flutter (Mobile/Web/PWA), Python 3.11 (FastAPI + Pydantic v2), Cloudflare Pages/Workers (Edge), Supabase (PostgreSQL + RLS), Firebase, Render, Asaas API v3, Meta Cloud API + Evolution API, Gemini API]
-ai_instruction: "Este documento contém a especificação completa do Shapelab Agent OS adaptado à arquitetura real da ShapeLab e integrado nativamente ao plugin cleudson-devkit do Google Antigravity. Se solicitado a inicializar o repositório, crie cada arquivo listado nas seções abaixo respeitando exatamente os caminhos e conteúdos especificados."
+ai_instruction: "Este documento contém a especificação completa do Shapelab Agent OS adaptado à arquitetura real da ShapeLab e integrado nativamente ao plugin shapelab-os do Google Antigravity. Se solicitado a inicializar o repositório, crie cada arquivo listado nas seções abaixo respeitando exatamente os caminhos e conteúdos especificados."
 ---
 
-# Shapelab Brain — Sistema Operacional de Engenharia Autônoma (v2.2)
+# Shapelab Brain — Sistema Operacional de Engenharia Autônoma (v2.3)
 
-Este documento define a arquitetura, a integração com a **Squad ShapeLab (`cleudson-devkit`)**, os agentes estratégicos, as *skills* testadas em produção e o fluxo operacional do repositório central **`shapelab-brain`**, projetado para escalar múltiplos produtos SaaS da Shapelab operados por um fundador/desenvolvedor solo com **Google Antigravity** e **Gemini**.
+Este documento define a arquitetura, a integração com a **Squad ShapeLab (`shapelab-os`)**, os agentes estratégicos, as *skills* testadas em produção e o fluxo operacional do repositório central **`shapelab-brain`**, projetado para escalar múltiplos produtos SaaS da Shapelab operados por um fundador/desenvolvedor solo com **Google Antigravity** e **Gemini**.
 
 ---
 
 ## 1. Arquitetura Real do Ecossistema e Roteamento de Contexto
 
-Para evitar poluição de contexto, custo excessivo de tokens e divergência entre projetos, o `shapelab-brain` atua como a **Memória Viva, Padrões de Código (Boilerplates) e Governança** que complementa o plugin global **`cleudson-devkit`** instalado no Antigravity.
+Para evitar poluição de contexto, custo excessivo de tokens e divergência entre projetos, o `shapelab-brain` atua como a **Memória Viva, Padrões de Código (Boilerplates) e Governança** que complementa o plugin global **`shapelab-os`** (`ShapeLab OS`) instalado no Antigravity.
 
 ### 1.1. Mapeamento Real de Produtos (`PROJETOS 2026`)
 | Produto Comercial | Diretório / Repositório Local | Stack Principal & Foco |
@@ -32,7 +32,7 @@ Para evitar poluição de contexto, custo excessivo de tokens e divergência ent
 | **Smart EV Hub** | `Smart-EV-Hub` | Plataforma e inteligência para mobilidade elétrica, recarga e integrações IoT/SaaS |
 | **Tattoo SaaS** | `tattoo-saas` *(Planejado)* | Vertical B2B2C para estúdios de tatuagem (reuso direto de Agenda, Split Asaas, Anamnese LGPD e WhatsApp Bot do Mr. Coach) |
 
-### 1.2. Sinergia: Plugin Global (`cleudson-devkit`) vs. Repositório (`shapelab-brain`)
+### 1.2. Sinergia: Plugin Global (`shapelab-os`) vs. Repositório (`shapelab-brain`)
 No Google Antigravity, já possuímos subagentes nativos invocáveis via `invoke_subagent`. O `shapelab-brain` não duplica esses subagentes — ele fornece os **contratos de código, ADRs, lições aprendidas e checklists de domínio** que esses subagentes consomem:
 
 | Subagente Nativo (`invoke_subagent`) | Modelo Ideal | Papel Tático (Execução) | Arquivo de Referência no `shapelab-brain` |
@@ -57,7 +57,13 @@ shapelab-brain/
 │   ├── ui/flutter_edge_to_edge.md        # Edge-to-Edge Bancário + Dual-Theme (Dark/Light WCAG)
 │   ├── backend/supabase_rls.md           # Multi-tenant RLS + Anti-Recursão + Storage Privado LGPD
 │   ├── growth/whatsapp_dual_channel.md   # Meta Cloud API (Primário) + Evolution API (Fallback Graceful Degradation)
-│   └── devops/versioning_and_ota_update.md # Versionamento Monotônico YYYYMMDDNN, Anti-Cache PWA/OTA e SemVer CI/CD
+│   ├── devops/versioning_and_ota_update.md # Versionamento Monotônico YYYYMMDDNN, Anti-Cache PWA/OTA e SemVer CI/CD
+│   └── brand/shapelab_brand_identity.md  # Identidade Prism S Neon, tokens Web/SEO/PWA/Flutter
+├── assets/
+│   └── brand/
+│       ├── brand_manifest.json           # Manifesto estruturado da marca (machine-readable)
+│       ├── shapelab_logo_prism_s.png     # Monograma oficial Prism S (1:1)
+│       └── shapelab_banner_prism_s.png   # Banner oficial SHAPELAB — AI VENTURE BUILDER (16:9)
 ├── memory/
 │   ├── LESSONS_LEARNED.md                # Base de conhecimento viva (incidentes reais resolvidos e padrões blindados)
 │   ├── TECH_RADAR.md                     # Tecnologias ADOTAR / EXPERIMENTAR / EVITAR na ShapeLab
@@ -91,7 +97,7 @@ Você pode consumir o `shapelab-brain` de duas formas:
 ~~~markdown
 # Shapelab Agent OS — Roteador de Contexto (INDEX)
 
-> **Regra para o Agente Principal e Subagentes (`cleudson-devkit`):**
+> **Regra para o Agente Principal e Subagentes (`shapelab-os` / `ShapeLab OS`):**
 > 1. Respeite sempre o **Protocolo Spec-First Gate** (`AGENTS.md` / `CORE_CONSTITUTION.md`).
 > 2. Carregue os arquivos abaixo **apenas sob demanda**, de acordo com a intenção da tarefa atual, preservando a janela de contexto.
 > 3. Para tarefas extensas, delegue ao subagente correspondente via `invoke_subagent` passando o caminho da skill relevante.
@@ -114,6 +120,7 @@ Você pode consumir o `shapelab-brain` de duas formas:
 | Banco Multi-tenant, Supabase RLS Anti-Recursão e Storage Privado LGPD | `skills/backend/supabase_rls.md` | `production-verified` | `B2B-personal-ia` |
 | Mensageria WhatsApp Dual-Channel (Meta Cloud Oficial + Fallback Evolution API) | `skills/growth/whatsapp_dual_channel.md` | `production-verified` | `B2B-personal-ia` |
 | Versionamento Monotônico (`YYYYMMDDNN`), Anti-Cache PWA/OTA e SemVer CI/CD | `skills/devops/versioning_and_ota_update.md` | `production-verified` | `B2B-personal-ia` / `ReformAI` |
+| Identidade Visual ShapeLab (Prism S Neon), Tokens, SEO, PWA & App Icons | `skills/brand/shapelab_brand_identity.md` | `production-verified` | `shapelab-brain` |
 
 ## 3. Memória Viva & Templates (`/memory` e `/templates`)
 - **Incidentes resolvidos e padrões blindados:** `memory/LESSONS_LEARNED.md`
@@ -889,6 +896,8 @@ Guia rápido de tecnologias aprovadas para manter a velocidade e o baixo custo d
 - [ ] `skills/ui/flutter_edge_to_edge.md` (UI Imersiva / Dual-Theme WCAG)
 - [ ] `skills/backend/supabase_rls.md` (Multi-Tenant RLS / Storage LGPD)
 - [ ] `skills/growth/whatsapp_dual_channel.md` (Notificações / Bot WhatsApp)
+- [ ] `skills/devops/versioning_and_ota_update.md` (Versionamento Monotônico / OTA PWA / SemVer CI)
+- [ ] `skills/brand/shapelab_brand_identity.md` (Identidade Prism S Neon / SEO / PWA / App Icons)
 
 ## 3. Análise de Impacto Spec-First & Zero-Downtime
 - **Rotas, Tabelas e Variáveis `.env` Afetadas:**

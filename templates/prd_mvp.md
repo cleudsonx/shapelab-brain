@@ -16,6 +16,7 @@
 - [ ] `skills/backend/supabase_rls.md` (Multi-Tenant RLS / Storage LGPD)
 - [ ] `skills/growth/whatsapp_dual_channel.md` (Notificações / Bot WhatsApp)
 - [ ] `skills/devops/versioning_and_ota_update.md` (Versionamento Monotônico / OTA PWA / SemVer CI)
+- [ ] `skills/brand/shapelab_brand_identity.md` (Identidade Prism S Neon / SEO / PWA / App Icons)
 
 ## 3. Análise de Impacto Spec-First & Zero-Downtime
 - **Rotas, Tabelas e Variáveis `.env` Afetadas:**

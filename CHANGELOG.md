@@ -2,6 +2,15 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.3.0] - 2026-11-22
+### Adicionado
+- Identidade visual oficial **Prism S** com efeito neon (`#10B981` → `#06B6D4` sobre `#090D16`): assets oficiais `assets/brand/shapelab_logo_prism_s.png` e `assets/brand/shapelab_banner_prism_s.png`.
+- Especificação de marca legível por humanos e modelos de IA: `skills/brand/shapelab_brand_identity.md` e manifesto estruturado `assets/brand/brand_manifest.json` para aplicação em `shapelab.ia.br`, páginas web, PWA e apps Flutter.
+- Banner oficial aplicado no `README.md`.
+
+### Alterado
+- Migração das referências do plugin global de `cleudson-devkit` para **`shapelab-os`** (`ShapeLab OS`) no `INDEX.md`, `README.md`, `ADR-001` e `shapelab_brain_blueprint.md`.
+
 ## [2.2.1] - 2026-11-22
 ### Adicionado
 - Workflow `.github/workflows/release.yml` para validar incremento SemVer de `VERSION` + presença de seção correspondente no `CHANGELOG.md` em PRs/pushes na `main`, criando automaticamente a tag `vX.Y.Z` e publicando a GitHub Release.

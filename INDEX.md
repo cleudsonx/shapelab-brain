@@ -1,6 +1,6 @@
 # Shapelab Agent OS — Roteador de Contexto (INDEX)
 
-> **Regra para o Agente Principal e Subagentes (`cleudson-devkit`):**
+> **Regra para o Agente Principal e Subagentes (`shapelab-os` / `ShapeLab OS`):**
 > 1. Respeite sempre o **Protocolo Spec-First Gate** (`AGENTS.md` / `CORE_CONSTITUTION.md`).
 > 2. Carregue os arquivos abaixo **apenas sob demanda**, de acordo com a intenção da tarefa atual, preservando a janela de contexto.
 > 3. Para tarefas extensas, delegue ao subagente correspondente via `invoke_subagent` passando o caminho da skill relevante.
@@ -23,6 +23,7 @@
 | Banco Multi-tenant, Supabase RLS Anti-Recursão e Storage Privado LGPD | `skills/backend/supabase_rls.md` | `production-verified` | `B2B-personal-ia` |
 | Mensageria WhatsApp Dual-Channel (Meta Cloud Oficial + Fallback Evolution API) | `skills/growth/whatsapp_dual_channel.md` | `production-verified` | `B2B-personal-ia` |
 | Versionamento Monotônico (`YYYYMMDDNN`), Anti-Cache PWA/OTA e SemVer CI/CD | `skills/devops/versioning_and_ota_update.md` | `production-verified` | `B2B-personal-ia` / `ReformAI` |
+| Identidade Visual ShapeLab (Prism S Neon), Tokens, SEO, PWA & App Icons | `skills/brand/shapelab_brand_identity.md` | `production-verified` | `shapelab-brain` |
 
 ## 3. Memória Viva & Templates (`/memory` e `/templates`)
 - **Incidentes resolvidos e padrões blindados:** `memory/LESSONS_LEARNED.md`
