@@ -2,6 +2,15 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.4.0] - 2026-11-23
+### Adicionado
+- Matriz viva de adoção e polinização cruzada: `memory/PRODUCT_MATRIX.md`.
+- Diagnóstico automatizado e sincronizador multi-produto: `scripts/brain_doctor.ps1`.
+- Rubrica Quantitativa de Promoção (`0–10`, corte `>= 7`) e integração com os Lifecycle Hooks (`SessionStart`, `PostToolUse`, `Stop`) do plugin `shapelab-os v3.0.0` + 5º subagente `shapelab-brain-curator` em `memory/BRAIN_EVOLUTION_PROTOCOL.md`.
+
+### Alterado
+- `INDEX.md`, `CORE_CONSTITUTION.md`, `README.md` e `shapelab_brain_blueprint.md` atualizados para a arquitetura de auto-aprendizado contínuo por versão/commit (`v2.4.0` / `shapelab-os v3.0.0`).
+
 ## [2.3.0] - 2026-11-22
 ### Adicionado
 - Identidade visual oficial **Prism S** com efeito neon (`#10B981` → `#06B6D4` sobre `#090D16`): assets oficiais `assets/brand/shapelab_logo_prism_s.png` e `assets/brand/shapelab_banner_prism_s.png`.

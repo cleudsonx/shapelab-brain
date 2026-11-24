@@ -13,6 +13,7 @@
 | Auditoria Red-Team, Auth Anti-Takeover, BCB 4893, RLS, LGPD, FinOps e testes de concorrência | `shapelab-security-fintech` (`Model: "pro"`) | `agents/guardian_auditor.md` |
 | Implementação FastAPI, Webhooks, Mensageria Dual-Channel e execução Pytest / CI Preflight | `shapelab-backend-qa` (`Model: "flash"`) | `CORE_CONSTITUTION.md` + skills de backend |
 | Evolução de UI Flutter/Web, Dual-Theme WCAG, Edge-to-Edge, cache offline v2 e `flutter test` | `shapelab-mobile-ui` (`Model: "flash"`) | `CORE_CONSTITUTION.md` + `skills/ui/flutter_edge_to_edge.md` |
+| Auto-aprendizado pós-commit/versão, Rubrica 0–10 e evolução do `.shapelab` | `shapelab-brain-curator` (`Model: "flash"`) | `memory/BRAIN_EVOLUTION_PROTOCOL.md` |
 
 ## 2. Biblioteca de Skills de Produção (`/skills`)
 | Domínio / Necessidade | Arquivo para Carregar | Status | Origem |
@@ -25,10 +26,12 @@
 | Versionamento Monotônico (`YYYYMMDDNN`), Anti-Cache PWA/OTA e SemVer CI/CD | `skills/devops/versioning_and_ota_update.md` | `production-verified` | `B2B-personal-ia` / `ReformAI` |
 | Identidade Visual ShapeLab (Prism S Neon), Tokens, SEO, PWA & App Icons | `skills/brand/shapelab_brand_identity.md` | `production-verified` | `shapelab-brain` |
 
-## 3. Memória Viva & Templates (`/memory` e `/templates`)
+## 3. Memória Viva, Diagnóstico & Templates (`/memory`, `/scripts` e `/templates`)
 - **Incidentes resolvidos e padrões blindados:** `memory/LESSONS_LEARNED.md`
+- **Matriz de adoção de skills por produto:** `memory/PRODUCT_MATRIX.md`
 - **Tecnologias aprovadas vs. banidas:** `memory/TECH_RADAR.md`
-- **Protocolo de autoatualização do Brain:** `memory/BRAIN_EVOLUTION_PROTOCOL.md`
+- **Protocolo de autoatualização do Brain (Rubrica 0–10 + Hooks):** `memory/BRAIN_EVOLUTION_PROTOCOL.md`
+- **Diagnóstico de saúde e sincronia multi-produto:** `scripts/brain_doctor.ps1`
 - **Decisões Arquiteturais (ADRs):** `memory/adrs/ADR-001-shapelab-agent-os.md`
 - **Criar uma nova Skill:** `templates/skill_template.md`
 - **Especificar um novo MVP ou Feature (Spec-First):** `templates/prd_mvp.md`

@@ -35,5 +35,6 @@ Diretrizes técnicas e de governança inegociáveis aplicáveis a todos os produ
 - **Frontend Flutter / PWA:** Todo produto Flutter/Web deve publicar `version.json` sincronizado com `pubspec.yaml`, `app_config.dart`, `app_changelog.dart` e `index.html` (`APP_CURRENT_BUILD`) usando build monotônico de 32 bits (`YYYYMMDDNN`), `initAssetCacheGuard` contra cache stale de manifests, detector OTA (`PwaUpdateWrapper`) e changelog segmentado por `targetRoles` (`skills/devops/versioning_and_ota_update.md`).
 - **Backend / Edge / Containers:** Todo serviço de backend deve expor sua versão no formato `MAJOR.MINOR.PATCH+build.<run>.<sha>` (e tag Docker com hífen) para rastreabilidade em logs de auditoria, WORM Ledger e CI/CD.
 
-## 6. Evolução Contínua do Brain
-- Sempre que uma nova regra, padrão reutilizável, skill ou lição aplicável a dois ou mais produtos da ShapeLab (ou projetos futuros) emergir durante o desenvolvimento, o agente deve seguir `memory/BRAIN_EVOLUTION_PROTOCOL.md` para propor e consolidar o aprendizado de volta no `shapelab-brain`.
+## 6. Evolução Contínua do Brain (Loop Fechado Automático)
+- O plugin `shapelab-os` (`v3.0+`) monitora automaticamente alterações de versão e commits via Lifecycle Hooks (`SessionStart`, `PostToolUse`, `Stop`).
+- Sempre que uma nova regra, padrão reutilizável, skill ou lição atingir **Score `>= 7/10`** na Rubrica de `memory/BRAIN_EVOLUTION_PROTOCOL.md` (aplicável a `>= 2` produtos atuais ou projetos futuros, sem segredos nem regras exclusivas de domínio), o agente deve acionar `shapelab-brain-curator` / `brain-self-learning`, atualizar `memory/PRODUCT_MATRIX.md`, incrementar `VERSION` + `CHANGELOG.md` e sincronizar o `.shapelab`.

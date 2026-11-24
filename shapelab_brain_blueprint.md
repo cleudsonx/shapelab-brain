@@ -2,9 +2,9 @@
 document_type: system_blueprint
 repository: shapelab-brain
 organization: Shapelab (shapelab.ia.br)
-version: 2.3.0
-date: 2026-11-22
-compatible_agents: [Google Antigravity, Gemini Pro, ShapeLab Squad (shapelab-os)]
+version: 2.4.0
+date: 2026-11-23
+compatible_agents: [Google Antigravity, Gemini Pro, ShapeLab OS v3.0 (shapelab-os)]
 target_products:
   - "Mr. Coach (repo local: B2B-personal-ia)"
   - "ReformAI (repo local: ReformAI)"
@@ -14,7 +14,7 @@ core_stack: [Flutter (Mobile/Web/PWA), Python 3.11 (FastAPI + Pydantic v2), Clou
 ai_instruction: "Este documento contém a especificação completa do Shapelab Agent OS adaptado à arquitetura real da ShapeLab e integrado nativamente ao plugin shapelab-os do Google Antigravity. Se solicitado a inicializar o repositório, crie cada arquivo listado nas seções abaixo respeitando exatamente os caminhos e conteúdos especificados."
 ---
 
-# Shapelab Brain — Sistema Operacional de Engenharia Autônoma (v2.3)
+# Shapelab Brain — Sistema Operacional de Engenharia Autônoma (v2.4)
 
 Este documento define a arquitetura, a integração com a **Squad ShapeLab (`shapelab-os`)**, os agentes estratégicos, as *skills* testadas em produção e o fluxo operacional do repositório central **`shapelab-brain`**, projetado para escalar múltiplos produtos SaaS da Shapelab operados por um fundador/desenvolvedor solo com **Google Antigravity** e **Gemini**.
 
@@ -41,6 +41,7 @@ No Google Antigravity, já possuímos subagentes nativos invocáveis via `invoke
 | 🛡️ `shapelab-security-fintech` | `pro` / `inherit` | Auditoria Red-Team (`auth-anti-takeover`), RBAC/AAL2/RLS, BCB 4893, JWS Split, WORM Ledger e testes de concorrência | `agents/guardian_auditor.md` + `skills/payments/asaas_split.md` + `skills/security/auth_anti_takeover.md` |
 | ⚙️ `shapelab-backend-qa` | `flash` / `inherit` | FastAPI, Supabase, Webhooks, Mensageria Dual-Channel e suíte Pytest (`ci-preflight`) | `skills/backend/supabase_rls.md` + `skills/growth/whatsapp_dual_channel.md` |
 | 📱 `shapelab-mobile-ui` | `flash` / `inherit` | Flutter (Web/Android/iOS), Dual-Theme WCAG, Edge-to-Edge, cache offline v2 e `flutter test` | `skills/ui/flutter_edge_to_edge.md` |
+| 🧠 `shapelab-brain-curator` | `flash` | Curadoria pós-commit/versão (`brain-self-learning`), Rubrica 0–10 e atualização de `PRODUCT_MATRIX.md` | `memory/BRAIN_EVOLUTION_PROTOCOL.md` |
 
 ### 1.3. Estrutura de Diretórios do `shapelab-brain`
 ~~~text
@@ -66,10 +67,12 @@ shapelab-brain/
 │       └── shapelab_banner_prism_s.png   # Banner oficial SHAPELAB — AI VENTURE BUILDER (16:9)
 ├── memory/
 │   ├── LESSONS_LEARNED.md                # Base de conhecimento viva (incidentes reais resolvidos e padrões blindados)
+│   ├── PRODUCT_MATRIX.md                 # Matriz viva de adoção de skills e lacunas entre produtos
 │   ├── TECH_RADAR.md                     # Tecnologias ADOTAR / EXPERIMENTAR / EVITAR na ShapeLab
-│   ├── BRAIN_EVOLUTION_PROTOCOL.md       # Protocolo de autoatualização em loop fechado
+│   ├── BRAIN_EVOLUTION_PROTOCOL.md       # Protocolo de autoatualização em loop fechado (Rubrica 0–10 + Hooks)
 │   └── adrs/                             # Histórico de decisões arquiteturais (ADR-001.md...)
 ├── scripts/
+│   ├── brain_doctor.ps1                  # Diagnóstico 360º do plugin, brain e sincronia dos submódulos
 │   ├── brain_sync.ps1                    # Sincronização pull/contribute entre produtos e brain
 │   └── brain_sync.sh                     # Equivalente Bash/Linux/CI
 ├── VERSION                               # Versão SemVer do próprio shapelab-brain
@@ -930,9 +933,10 @@ Para materializar toda a árvore de diretórios e arquivos especificada acima (`
 
 ## 8. Protocolo de Autoatualização do Brain (`memory/BRAIN_EVOLUTION_PROTOCOL.md`)
 
-O `shapelab-brain` opera em **loop fechado de evolução contínua**:
-1. **Critérios de Promoção:** Qualquer ideia, instrução, correção ou melhoria que se aplique a `>= 2` produtos (ou projetos futuros), sem segredos nem regras exclusivas de um único domínio, é promovida ao `shapelab-brain`.
-2. **Versionamento do Brain:** Controlado por `VERSION` e `CHANGELOG.md` (`PATCH` = lessons/radar/ADR; `MINOR` = nova skill; `MAJOR` = mudança na constituição).
-3. **Sincronização entre Produtos:**
+O `shapelab-brain` opera em **loop fechado de evolução contínua** acoplado aos Lifecycle Hooks do `shapelab-os v3.0`:
+1. **Observação Automática:** `SessionStart` injeta status/defasagem; `PostToolUse` detecta bumps de versão ou commits; `Stop` aciona `brain-self-learning` / `shapelab-brain-curator` sem loops infinitos.
+2. **Rubrica Quantitativa (Score 0–10, corte >= 7):** Avalia impacto multi-produto (`>= 2` produtos ou projetos futuros), redução de risco/custo e agnosticismo (zero segredos/regras exclusivas de domínio).
+3. **Versionamento & Saúde:** Controlado por `VERSION`, `CHANGELOG.md`, `memory/PRODUCT_MATRIX.md` e validado por `scripts/brain_doctor.ps1`.
+4. **Sincronização entre Produtos:**
    - **Manual/Sessão:** `scripts/brain_sync.ps1 -Mode pull` (receber) e `scripts/brain_sync.ps1 -Mode contribute -Message "brain: <tipo>: <resumo>"` (contribuir).
    - **Automatizada (CI):** `.github/workflows/brain_sync.yml` abre PR `chore/brain-sync` diariamente quando há atualizações no repositório central, sem disparar deploys diretos na `main`.
