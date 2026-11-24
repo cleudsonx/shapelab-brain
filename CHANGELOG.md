@@ -2,6 +2,10 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.8.1] - 2026-11-24
+### Alterado
+- **Matriz de Adoção (`memory/PRODUCT_MATRIX.md`):** Atualizado status do `ReformAI` para `.shapelab v2.8.0`, registrando cobertura de `auth_anti_takeover.md` (`_guard.ts` + PBKDF2 + `node-rbac-guard.ts`), `supabase_rls.md` (`D1 + Supabase PostGIS`) e entregas `P3.2`/`P3.3`/`P3.4`.
+
 ## [2.8.0] - 2026-11-24
 ### Adicionado
 - **Nova Skill SRE:** `skills/sre/observability_crash_shield_and_backup.md` cobrindo Deep Healthcheck (`/health/live` desacoplado de dependências vs `/health/ready` paralelo com timeout de 2s), sanitização estrita de HTTP 500 com `correlation_id` e redator de segredos, Crash Shield global para Flutter/Web com anti-flood de telemetria e política de backup contínuo Supabase (PITR + dump diário criptografado com AES-256 e restore drill).
