@@ -2,6 +2,15 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.11.0] - 2026-11-24
+### Adicionado
+- **Preflight CI Gate nos Workflows GitHub Actions (Opção B):**
+  - Implementação da CLI autônoma `scripts/ci_preflight_check.mjs` sem nenhuma dependência externa (Node.js nativo >= 18 ESM), auditando os 5 gates essenciais de segurança, RLS, versionamento e governança.
+  - Suporte completo às flags `--strict`, `--threshold=<num>`, `--warn-only`, `--github-actions` (com emissão de anotações nativas `::error::` / `::warning::` e geração do relatório Markdown no `$GITHUB_STEP_SUMMARY`) e `--json`.
+  - Refatoração do servidor MCP (`scripts/shapelab_brain_mcp.mjs`) para importar `auditPreflight` de `ci_preflight_check.mjs` como *Single Source of Truth (SSOT)*, eliminando mais de 350 linhas de duplicação.
+  - Criação do template `templates/github_workflow_ci_preflight.yml` e integração do job `shapelab-preflight` nos workflows dos produtos (`B2B-personal-ia`, `ReformAI`, `Smart-EV-Hub`).
+  - Refinamento de heurísticas para prevenir falsos positivos em testes adversariais (`alg: none`) e hosts de contêineres Docker locais (`db`, `postgres`, `localhost`).
+
 ## [2.10.0] - 2026-11-24
 ### Adicionado
 - **Cockpit Visual do Fundador (MCP App SEP-1865 & Generative UI):**

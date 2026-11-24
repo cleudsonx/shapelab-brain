@@ -36,9 +36,11 @@
 - **Protocolo de autoatualização do Brain (Rubrica 0–10 + Hooks):** `memory/BRAIN_EVOLUTION_PROTOCOL.md`
 - **Diagnóstico de saúde e sincronia multi-produto:** `scripts/brain_doctor.ps1`
 - **Servidor MCP nativo (Resources & Tools operacionais):** `scripts/shapelab_brain_mcp.mjs`
+- **CLI Autônoma Preflight CI Gate (Zero-deps & GitHub Actions):** `scripts/ci_preflight_check.mjs`
 - **Cockpit Visual do Fundador (MCP App no Side Pane / Generative UI):** `scripts/cockpit_app.html`
 - **Scanner automático de vacinas pendentes:** `scripts/brain_vaccines.ps1`
 - **Scaffolder Zero-to-SaaS (novo produto completo):** `scripts/new_shapelab_saas.ps1`
 - **Decisões Arquiteturais (ADRs):** `memory/adrs/ADR-001-shapelab-agent-os.md`
 - **Criar uma nova Skill:** `templates/skill_template.md`
 - **Especificar um novo MVP ou Feature (Spec-First):** `templates/prd_mvp.md`
+- **Template de Workflow CI/CD Preflight Gate:** `templates/github_workflow_ci_preflight.yml`

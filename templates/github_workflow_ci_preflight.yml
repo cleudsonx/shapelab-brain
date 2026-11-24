@@ -1,0 +1,28 @@
+name: ShapeLab CI Preflight
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore: ['.shapelab/**', '**.md']
+  pull_request:
+    branches: [main, master]
+    paths-ignore: ['.shapelab/**', '**.md']
+  workflow_dispatch:
+
+jobs:
+  shapelab-preflight:
+    name: ShapeLab Security, RLS & Governance Preflight
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout com Submódulo .shapelab
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Node.js (runtime nativo, zero npm install)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Executar ShapeLab Preflight Gate
+        run: node .shapelab/scripts/ci_preflight_check.mjs --strict --threshold=80 --github-actions
