@@ -4,6 +4,7 @@ import path from "node:path";
 import readline from "node:readline";
 import { execFile, execFileSync } from "node:child_process";
 import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
 
 const execFileAsync = promisify(execFile);
 
@@ -13,6 +14,15 @@ const DEFAULT_BRAIN_ROOT =
 
 const ALLOWED_PRODUCTS = new Set(["B2B-personal-ia", "ReformAI", "Smart-EV-Hub"]);
 const DEFAULT_PRODUCTS = ["B2B-personal-ia", "ReformAI", "Smart-EV-Hub"];
+
+const COCKPIT_RESOURCE_URI = "ui://cockpit/app.html";
+const COCKPIT_RESOURCE_META = {
+  ui: {
+    prefersBorder: false,
+  },
+};
+const COCKPIT_CACHE_TTL_MS = 15_000;
+const cockpitCache = new Map();
 
 const RESOURCE_REGISTRY = new Map([
   [
@@ -320,7 +330,7 @@ function proposeLesson({
 }
 
 function listBrainResources() {
-  return Array.from(RESOURCE_REGISTRY.values()).map(
+  const items = Array.from(RESOURCE_REGISTRY.values()).map(
     ({ uri, name, description, mimeType }) => ({
       uri,
       name,
@@ -328,6 +338,14 @@ function listBrainResources() {
       mimeType,
     })
   );
+  items.push({
+    uri: COCKPIT_RESOURCE_URI,
+    name: "ShapeLab Founder Cockpit",
+    description: "Painel interativo do Fundador (MCP App) com status dos produtos, preflight audit e matriz de vacinas.",
+    mimeType: "text/html",
+    _meta: COCKPIT_RESOURCE_META,
+  });
+  return items;
 }
 
 function validateBrainUri(uri) {
@@ -339,6 +357,26 @@ function validateBrainUri(uri) {
 }
 
 function readBrainResource(rawUri) {
+  if (rawUri === COCKPIT_RESOURCE_URI) {
+    try {
+      const html = buildCockpitHtml();
+      return {
+        result: {
+          contents: [
+            {
+              uri: COCKPIT_RESOURCE_URI,
+              mimeType: "text/html",
+              text: html,
+              _meta: COCKPIT_RESOURCE_META,
+            },
+          ],
+        },
+      };
+    } catch (err) {
+      return { error: rpcError(-32002, `Failed to load cockpit: ${err?.message || err}`) };
+    }
+  }
+
   const uri = validateBrainUri(rawUri);
   if (!uri) {
     return { error: rpcError(-32602, "Invalid brain:// URI format") };
@@ -939,7 +977,273 @@ async function syncAllProducts({ workspaceBase, products } = {}) {
   }
 }
 
+function countMarkdownUnder(dirPath) {
+  let count = 0;
+  if (!fs.existsSync(dirPath)) return 0;
+  const stack = [dirPath];
+  while (stack.length > 0) {
+    const cur = stack.pop();
+    let entries;
+    try {
+      entries = fs.readdirSync(cur, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const entry of entries) {
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) {
+        if (!AUDIT_IGNORED_DIRS.has(entry.name)) {
+          stack.push(path.join(cur, entry.name));
+        }
+      } else if (entry.isFile() && entry.name.endsWith(".md")) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+function resolveDefaultProjectPath(product) {
+  const baseDir = path.dirname(DEFAULT_BRAIN_ROOT);
+  return path.join(baseDir, product);
+}
+
+async function inspectSingleProduct({ product, workspaceBase, centralHead, centralVersion }) {
+  const baseDir = workspaceBase
+    ? path.resolve(workspaceBase)
+    : path.dirname(DEFAULT_BRAIN_ROOT);
+  const prodPath = path.join(baseDir, product);
+  const exists = fs.existsSync(prodPath);
+
+  if (!exists) {
+    return {
+      id: product,
+      displayName: product,
+      path: prodPath,
+      exists: false,
+      status: "MISSING",
+      appVersion: "unknown",
+      shapelabVersion: "missing",
+      submoduleHead: "none",
+      inSyncWithCentralHead: false,
+      auditScore: 0,
+      checks: [],
+    };
+  }
+
+  let appVersion = "unknown";
+  try {
+    const candidateFiles = [
+      path.join(prodPath, "mobile", "pubspec.yaml"),
+      path.join(prodPath, "pubspec.yaml"),
+      path.join(prodPath, "frontend", "pubspec.yaml"),
+      path.join(prodPath, "backend", "pyproject.toml"),
+      path.join(prodPath, "pyproject.toml"),
+      path.join(prodPath, "package.json"),
+      path.join(prodPath, "frontend", "package.json"),
+      path.join(prodPath, "web", "package.json"),
+    ];
+
+    for (const f of candidateFiles) {
+      if (!fs.existsSync(f)) continue;
+      const content = fs.readFileSync(f, "utf8");
+      if (f.endsWith("pubspec.yaml")) {
+        const m = content.match(/^version:\s*([^\s+]+)/m);
+        if (m) {
+          appVersion = m[1];
+          break;
+        }
+      } else if (f.endsWith("pyproject.toml")) {
+        const m = content.match(/^version\s*=\s*["']([^"']+)["']/m);
+        if (m) {
+          appVersion = m[1];
+          break;
+        }
+      } else if (f.endsWith("package.json")) {
+        try {
+          const parsed = JSON.parse(content);
+          if (parsed.version) {
+            appVersion = parsed.version;
+            break;
+          }
+        } catch {
+          // continue
+        }
+      }
+    }
+  } catch {
+    // keep unknown
+  }
+
+  const subVerPath = path.join(prodPath, ".shapelab", "VERSION");
+  const shapelabVersion = fs.existsSync(subVerPath)
+    ? fs.readFileSync(subVerPath, "utf8").trim()
+    : "missing";
+
+  let submoduleHead = "unknown";
+  try {
+    const subGitPath = path.join(prodPath, ".shapelab");
+    if (fs.existsSync(path.join(subGitPath, ".git")) || fs.existsSync(path.join(prodPath, ".gitmodules"))) {
+      const res = await runGit(["rev-parse", "HEAD"], subGitPath);
+      submoduleHead = res.stdout ? res.stdout.slice(0, 7) : "unknown";
+    }
+  } catch {
+    submoduleHead = "unknown";
+  }
+
+  const inSyncWithCentralHead =
+    Boolean(centralHead) &&
+    submoduleHead !== "unknown" &&
+    centralHead.startsWith(submoduleHead);
+
+  const status = shapelabVersion === centralVersion ? "OK" : "OUT_OF_SYNC";
+
+  let auditScore = 0;
+  let checks = [];
+  try {
+    const auditRes = auditPreflight({ projectPath: prodPath });
+    if (!auditRes.error) {
+      auditScore = auditRes.score ?? 0;
+      checks = auditRes.checks ?? [];
+    }
+  } catch {
+    // audit fallback
+  }
+
+  return {
+    id: product,
+    displayName: product,
+    path: prodPath,
+    exists: true,
+    status,
+    appVersion,
+    shapelabVersion,
+    submoduleHead,
+    inSyncWithCentralHead,
+    auditScore,
+    checks,
+  };
+}
+
+async function getCockpitData(workspaceBase) {
+  const cacheKey = workspaceBase || "default";
+  const cached = cockpitCache.get(cacheKey);
+  const now = Date.now();
+  if (cached && now - cached.timestamp < COCKPIT_CACHE_TTL_MS) {
+    return cached.data;
+  }
+
+  let centralHead = null;
+  try {
+    const res = await runGit(["rev-parse", "HEAD"], DEFAULT_BRAIN_ROOT);
+    centralHead = res.stdout ? res.stdout.slice(0, 7) : null;
+  } catch {
+    centralHead = null;
+  }
+
+  const centralVersionPath = path.join(DEFAULT_BRAIN_ROOT, "VERSION");
+  const centralVersion = fs.existsSync(centralVersionPath)
+    ? fs.readFileSync(centralVersionPath, "utf8").trim()
+    : "unknown";
+
+  const totalSkills = countMarkdownUnder(path.join(DEFAULT_BRAIN_ROOT, "skills"));
+  const vaccines = vaccineStatus({});
+
+  const products = await Promise.all(
+    DEFAULT_PRODUCTS.map((product) =>
+      inspectSingleProduct({
+        product,
+        workspaceBase,
+        centralHead,
+        centralVersion,
+      })
+    )
+  );
+
+  const data = {
+    brain: {
+      root: DEFAULT_BRAIN_ROOT,
+      version: centralVersion,
+      head: centralHead,
+      totalSkills,
+    },
+    centralVersion,
+    centralHead,
+    totalSkills,
+    products,
+    vaccines: vaccines.matrix || [],
+    generatedAt: new Date().toISOString(),
+  };
+
+  cockpitCache.set(cacheKey, { timestamp: now, data });
+  return data;
+}
+
+function buildCockpitHtml(injectedData = null) {
+  let template = "";
+  const candidatePaths = [
+    path.join(path.dirname(fileURLToPath(import.meta.url)), "cockpit_app.html"),
+    path.join(DEFAULT_BRAIN_ROOT, "scripts", "cockpit_app.html"),
+    "C:\\Users\\Cleudson\\.gemini\\antigravity\\brain\\6de40630-d886-4f90-996a-c7ddd129afa1\\shapelab_founder_cockpit.html",
+  ];
+
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) {
+      try {
+        template = fs.readFileSync(p, "utf8");
+        if (template && template.length > 500) break;
+      } catch {
+        // continue
+      }
+    }
+  }
+
+  if (!template) {
+    throw new Error("cockpit_app.html template not found");
+  }
+
+  if (injectedData) {
+    const injectionScript = `<script>window.__SHAPELAB_COCKPIT_DATA__ = ${JSON.stringify(
+      injectedData
+    )};</script>`;
+    if (template.includes("</head>")) {
+      return template.replace("</head>", `${injectionScript}\n</head>`);
+    }
+    return `${injectionScript}\n${template}`;
+  }
+
+  return template;
+}
+
 const TOOLS = [
+  {
+    name: "brain_cockpit",
+    description:
+      "Abre o Cockpit Visual do Fundador da ShapeLab (MCP App no Side Pane) exibindo métricas de saúde, auditoria de segurança (preflight), sincronia de submódulos e matriz de vacinas dos produtos em tempo real.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        workspaceBase: {
+          type: "string",
+          description:
+            "Diretório pai opcional contendo os repositórios dos produtos",
+        },
+      },
+    },
+    _meta: {
+      ui: {
+        resourceUri: COCKPIT_RESOURCE_URI,
+      },
+      "com.google.antigravity/ui": {
+        entrypoints: [
+          {
+            type: "aux_pane",
+            title: "ShapeLab Cockpit",
+          },
+        ],
+      },
+    },
+  },
   {
     name: "brain_query",
     description:
@@ -1111,6 +1415,34 @@ rl.on("line", async (line) => {
       const name = params?.name;
       const rawArgs = params?.arguments;
       const args = rawArgs && typeof rawArgs === "object" && !Array.isArray(rawArgs) ? rawArgs : {};
+
+      if (name === "brain_cockpit") {
+        const cockpit = await getCockpitData(args?.workspaceBase);
+        const summaryText =
+          `ShapeLab Founder Cockpit v${cockpit.centralVersion} (${cockpit.centralHead || "unknown"})\n` +
+          `Produtos monitorados: ${cockpit.products.length} | Skills ativas: ${cockpit.totalSkills}\n` +
+          cockpit.products
+            .map(
+              (p) =>
+                ` - ${p.id}: App v${p.appVersion} | Submodule v${p.shapelabVersion} [${p.status}] | Preflight: ${p.auditScore}/100`
+            )
+            .join("\n");
+
+        return send({
+          jsonrpc: "2.0",
+          id,
+          result: {
+            content: [{ type: "text", text: summaryText }],
+            structuredContent: cockpit,
+            _meta: {
+              ui: {
+                resourceUri: COCKPIT_RESOURCE_URI,
+              },
+            },
+          },
+        });
+      }
+
       let payload;
 
       if (name === "brain_query") payload = queryBrain(args);

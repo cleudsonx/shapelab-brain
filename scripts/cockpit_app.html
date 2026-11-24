@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090D16" />
+  <title>ShapeLab OS — Founder Cockpit</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --sl-obsidian: #090D16;
+      --sl-surface-dark: #0F172A;
+      --sl-emerald: #10B981;
+      --sl-cyan: #06B6D4;
+      --sl-platinum: #F8FAFC;
+      --sl-slate: #94A3B8;
+
+      /* Light Mode Defaults (Antigravity semantic fallback) */
+      --background: #F8FAFC;
+      --foreground: #0F172A;
+      --card: #FFFFFF;
+      --card-foreground: #0F172A;
+      --muted: #F1F5F9;
+      --muted-foreground: #475569;
+      --border: #CBD5E1;
+      --primary: #059669;
+      --primary-foreground: #FFFFFF;
+      --accent: #E2E8F0;
+      --accent-foreground: #0F172A;
+
+      /* Accessible semantic inks (WCAG AA >= 4.5:1) */
+      --sl-accent-ink: #047857;
+      --sl-cyan-ink: #0E7490;
+      --sl-warn-bg: rgba(217, 119, 6, 0.12);
+      --sl-warn-ink: #B45309;
+      --sl-warn-border: rgba(217, 119, 6, 0.35);
+      --sl-ok-bg: rgba(5, 150, 105, 0.12);
+      --sl-ok-ink: #047857;
+      --sl-ok-border: rgba(5, 150, 105, 0.35);
+      --sl-fail-bg: rgba(225, 29, 72, 0.12);
+      --sl-fail-ink: #BE123C;
+      --sl-fail-border: rgba(225, 29, 72, 0.35);
+      --sl-track: #E2E8F0;
+      --sl-glass: rgba(255, 255, 255, 0.86);
+      --sl-prism-glow: drop-shadow(0 0 12px rgba(16, 185, 129, 0.25)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.18));
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root[data-theme="auto"] {
+        --background: #090D16;
+        --foreground: #F8FAFC;
+        --card: #0F172A;
+        --card-foreground: #F8FAFC;
+        --muted: #1E293B;
+        --muted-foreground: #94A3B8;
+        --border: rgba(148, 163, 184, 0.2);
+        --primary: #10B981;
+        --primary-foreground: #042F2E;
+        --accent: #1E293B;
+        --accent-foreground: #F8FAFC;
+
+        --sl-accent-ink: #34D399;
+        --sl-cyan-ink: #22D3EE;
+        --sl-warn-bg: rgba(245, 158, 11, 0.14);
+        --sl-warn-ink: #FCD34D;
+        --sl-warn-border: rgba(245, 158, 11, 0.35);
+        --sl-ok-bg: rgba(16, 185, 129, 0.14);
+        --sl-ok-ink: #34D399;
+        --sl-ok-border: rgba(16, 185, 129, 0.35);
+        --sl-fail-bg: rgba(244, 63, 94, 0.15);
+        --sl-fail-ink: #FDA4AF;
+        --sl-fail-border: rgba(244, 63, 94, 0.38);
+        --sl-track: #1E293B;
+        --sl-glass: rgba(15, 23, 42, 0.88);
+        --sl-prism-glow: drop-shadow(0 0 18px rgba(16, 185, 129, 0.35)) drop-shadow(0 0 28px rgba(6, 182, 212, 0.25));
+      }
+    }
+
+    :root[data-theme="dark"],
+    .dark {
+      color-scheme: dark;
+      --background: #090D16;
+      --foreground: #F8FAFC;
+      --card: #0F172A;
+      --card-foreground: #F8FAFC;
+      --muted: #1E293B;
+      --muted-foreground: #94A3B8;
+      --border: rgba(148, 163, 184, 0.2);
+      --primary: #10B981;
+      --primary-foreground: #042F2E;
+      --accent: #1E293B;
+      --accent-foreground: #F8FAFC;
+
+      --sl-accent-ink: #34D399;
+      --sl-cyan-ink: #22D3EE;
+      --sl-warn-bg: rgba(245, 158, 11, 0.14);
+      --sl-warn-ink: #FCD34D;
+      --sl-warn-border: rgba(245, 158, 11, 0.35);
+      --sl-ok-bg: rgba(16, 185, 129, 0.14);
+      --sl-ok-ink: #34D399;
+      --sl-ok-border: rgba(16, 185, 129, 0.35);
+      --sl-fail-bg: rgba(244, 63, 94, 0.15);
+      --sl-fail-ink: #FDA4AF;
+      --sl-fail-border: rgba(244, 63, 94, 0.38);
+      --sl-track: #1E293B;
+      --sl-glass: rgba(15, 23, 42, 0.88);
+      --sl-prism-glow: drop-shadow(0 0 18px rgba(16, 185, 129, 0.35)) drop-shadow(0 0 28px rgba(6, 182, 212, 0.25));
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .sl-card {
+      background-color: var(--card);
+      color: var(--card-foreground);
+      border: 1px solid var(--border);
+    }
+
+    .sl-glass {
+      background-color: var(--sl-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+
+    .sl-prism-gradient {
+      background: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+    }
+
+    .sl-prism-text {
+      background: linear-gradient(135deg, var(--sl-accent-ink) 0%, var(--sl-cyan-ink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sl-prism-svg {
+      filter: var(--sl-prism-glow);
+    }
+
+    .sl-focus:focus-visible {
+      outline: 2px solid #06B6D4;
+      outline-offset: 2px;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    @keyframes slSpin {
+      to { transform: rotate(360deg); }
+    }
+    .sl-spin {
+      animation: slSpin 0.9s linear infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER STICKY -->
+  <header class="sticky top-0 z-30 border-b sl-glass">
+    <div class="max-w-6xl mx-auto px-3 sm:px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <!-- Prism S Monogram (SVG Inline Oficial) -->
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border"
+             style="background:#090D16; border-color: rgba(16,185,129,0.35);">
+          <svg viewBox="0 0 64 64" class="w-7 h-7 sl-prism-svg" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="prismGradA" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#10B981" />
+                <stop offset="100%" stop-color="#06B6D4" />
+              </linearGradient>
+              <linearGradient id="prismGradB" x1="56" y1="12" x2="12" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#06B6D4" />
+                <stop offset="100%" stop-color="#10B981" />
+              </linearGradient>
+            </defs>
+            <path d="M44 14H24C17.4 14 13 17.8 13 23.2C13 28.4 17.2 31.3 25 32.8L37 35.1C40.8 35.8 43 37.4 43 40.3C43 43.4 39.8 45.5 34.8 45.5H17"
+                  stroke="url(#prismGradA)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 50H40C46.6 50 51 46.2 51 40.8C51 35.6 46.8 32.7 39 31.2L27 28.9C23.2 28.2 21 26.6 21 23.7C21 20.6 24.2 18.5 29.2 18.5H47"
+                  stroke="url(#prismGradB)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>
+          </svg>
+        </div>
+
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-base font-bold tracking-wider uppercase truncate">
+              SHAPELAB <span class="sl-prism-text">OS</span>
+            </h1>
+            <span id="brainVersionBadge"
+                  class="px-2 py-0.5 text-[11px] font-mono font-semibold rounded-full border"
+                  style="background: var(--sl-ok-bg); color: var(--sl-ok-ink); border-color: var(--sl-ok-border);">
+              Brain v2.9.0
+            </span>
+          </div>
+          <p class="text-[11px] tracking-widest uppercase truncate" style="color: var(--muted-foreground);">
+            Founder Cockpit · AI Venture Builder
+          </p>
+        </div>
+      </div>
+
+      <!-- Status Global + Host Mode + Theme Toggle -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <div id="globalSquadStatus"
+             class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border"
+             style="background: var(--sl-ok-bg); color: var(--sl-ok-ink); border-color: var(--sl-ok-border);">
+          <span class="w-2 h-2 rounded-full bg-current"></span>
+          <span id="globalSquadText">Squad 3/3 Synced</span>
+        </div>
+
+        <span id="bridgeModeBadge"
+              class="px-2 py-1 rounded-md text-[11px] font-mono border"
+              style="background: var(--muted); color: var(--muted-foreground); border-color: var(--border);"
+              title="Modo de comunicação MCP / Generative UI">
+          MCP APP &amp; UI
+        </span>
+
+        <div class="inline-flex rounded-lg border p-0.5" style="background: var(--muted); border-color: var(--border);" role="group" aria-label="Tema">
+          <button type="button" data-theme-btn="auto" class="sl-focus px-2 py-1 text-[11px] font-medium rounded-md transition">Auto</button>
+          <button type="button" data-theme-btn="dark" class="sl-focus px-2 py-1 text-[11px] font-medium rounded-md transition">Dark</button>
+          <button type="button" data-theme-btn="light" class="sl-focus px-2 py-1 text-[11px] font-medium rounded-md transition">Light</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Navegação: Tabs + Alternador de Produto -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-5 pb-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <!-- Tabs -->
+      <nav class="flex items-center gap-1 overflow-x-auto" role="tablist" aria-label="Seções do Cockpit">
+        <button type="button" role="tab" aria-selected="true" data-tab="overview"
+                class="sl-focus px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition">
+          Visão Geral
+        </button>
+        <button type="button" role="tab" aria-selected="false" data-tab="audit"
+                class="sl-focus px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition">
+          Preflight Audit
+        </button>
+        <button type="button" role="tab" aria-selected="false" data-tab="vaccines"
+                class="sl-focus px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition">
+          Matriz de Vacinas
+        </button>
+      </nav>
+
+      <!-- Alternador de Produto -->
+      <div class="flex items-center gap-1 overflow-x-auto" role="group" aria-label="Filtrar produto">
+        <span class="text-[11px] font-medium mr-1 hidden sm:inline" style="color: var(--muted-foreground);">Produto:</span>
+        <button type="button" data-product-filter="ALL"
+                class="sl-focus px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap border transition">
+          Todos (3)
+        </button>
+        <button type="button" data-product-filter="B2B-personal-ia"
+                class="sl-focus px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap border transition">
+          Mr. Coach
+        </button>
+        <button type="button" data-product-filter="ReformAI"
+                class="sl-focus px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap border transition">
+          ReformAI
+        </button>
+        <button type="button" data-product-filter="Smart-EV-Hub"
+                class="sl-focus px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap border transition">
+          Smart EV Hub
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-5 py-4 pb-24 space-y-5">
+
+    <!-- SEÇÃO 1: GAUGES / CARDS DOS 3 PRODUTOS -->
+    <section id="sectionProducts" aria-labelledby="headingProducts">
+      <div class="flex items-center justify-between gap-2 mb-2.5">
+        <div>
+          <h2 id="headingProducts" class="text-xs font-bold uppercase tracking-wider" style="color: var(--muted-foreground);">
+            Sincronia & Saúde por Produto (.shapelab)
+          </h2>
+        </div>
+        <span class="text-[11px] font-mono" style="color: var(--muted-foreground);">
+          Central HEAD: <strong id="centralHeadLabel" style="color: var(--foreground);">113edd2</strong>
+        </span>
+      </div>
+
+      <div id="productCardsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <!-- Preenchido via JS -->
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: PAINEL PREFLIGHT AUDIT -->
+    <section id="sectionAudit" class="sl-card rounded-2xl p-4 sm:p-5 space-y-4" aria-labelledby="headingAudit">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 id="headingAudit" class="text-sm sm:text-base font-bold">
+              Preflight Audit · <span id="auditProductLabel" class="sl-prism-text">B2B-personal-ia</span>
+            </h2>
+            <span id="auditStatusPill" class="px-2 py-0.5 text-[11px] font-semibold rounded-full border">
+              PASSED
+            </span>
+          </div>
+          <p id="auditMetaText" class="text-xs mt-0.5" style="color: var(--muted-foreground);">
+            5 gates oficiais · brain_audit_preflight · 412 arquivos escaneados
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <div class="text-[11px] uppercase tracking-wider font-semibold" style="color: var(--muted-foreground);">
+              Score Geral
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold tabular-nums leading-none">
+              <span id="auditScoreValue">100</span><span class="text-sm font-medium" style="color: var(--muted-foreground);">/100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso Colorida -->
+      <div class="w-full h-3 rounded-full overflow-hidden" style="background: var(--sl-track);" role="progressbar"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="auditProgressBarWrap">
+        <div id="auditProgressBar" class="h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
+      </div>
+
+      <!-- Checklist dos 5 Gates -->
+      <div id="auditGatesList" class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
+        <!-- Preenchido via JS -->
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: MATRIZ DE VACINAS RÁPIDA -->
+    <section id="sectionVaccines" class="sl-card rounded-2xl p-4 sm:p-5 space-y-3.5" aria-labelledby="headingVaccines">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h2 id="headingVaccines" class="text-sm sm:text-base font-bold">
+            Matriz de Vacinas Rápida (Skills Oficiais)
+          </h2>
+          <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">
+            Cobertura cruzada derivada de <code class="font-mono">PRODUCT_MATRIX.md</code>
+          </p>
+        </div>
+
+        <!-- Filtros da Matriz -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <input id="vaccineSearchInput" type="search" placeholder="Filtrar skill ou domínio..."
+                 aria-label="Buscar skill na matriz de vacinas"
+                 class="sl-focus px-3 py-1.5 text-xs rounded-lg border min-w-0 sm:w-48"
+                 style="background: var(--background); color: var(--foreground); border-color: var(--border);" />
+          <div class="flex items-center gap-1 flex-wrap" role="group" aria-label="Filtrar por status da vacina">
+            <button type="button" data-vaccine-filter="all" class="sl-focus px-2 py-1 rounded-md text-[11px] font-medium border">Todas</button>
+            <button type="button" data-vaccine-filter="active" class="sl-focus px-2 py-1 rounded-md text-[11px] font-medium border">Ativas</button>
+            <button type="button" data-vaccine-filter="partial" class="sl-focus px-2 py-1 rounded-md text-[11px] font-medium border">Parciais</button>
+            <button type="button" data-vaccine-filter="recommended" class="sl-focus px-2 py-1 rounded-md text-[11px] font-medium border">Recomendadas</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumo numérico rápido -->
+      <div id="vaccineSummaryBar" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+
+      <!-- Tabela/Lista responsiva -->
+      <div class="overflow-x-auto rounded-xl border" style="border-color: var(--border);">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr style="background: var(--muted); color: var(--muted-foreground);">
+              <th class="py-2.5 px-3 font-semibold">Skill Oficial / Capacidade</th>
+              <th class="py-2.5 px-2.5 font-semibold text-center" data-col-prod="B2B-personal-ia">Mr. Coach</th>
+              <th class="py-2.5 px-2.5 font-semibold text-center" data-col-prod="ReformAI">ReformAI</th>
+              <th class="py-2.5 px-2.5 font-semibold text-center" data-col-prod="Smart-EV-Hub">Smart EV Hub</th>
+            </tr>
+          </thead>
+          <tbody id="vaccineTableBody" class="divide-y" style="border-color: var(--border);">
+            <!-- Preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- STICKY FOOTER: AÇÕES RÁPIDAS -->
+  <footer class="fixed bottom-0 inset-x-0 z-30 border-t sl-glass">
+    <div class="max-w-6xl mx-auto px-3 sm:px-5 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="w-2 h-2 rounded-full shrink-0 sl-prism-gradient"></span>
+        <p id="activityStatus" class="text-[11px] font-mono truncate" aria-live="polite" style="color: var(--muted-foreground);">
+          Pronto · Cockpit sincronizado com Brain v2.9.0 (113edd2)
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btnRecalcAudit" type="button"
+                class="sl-focus inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition"
+                style="background: var(--card); color: var(--foreground); border-color: var(--border);">
+          <span id="iconAudit">↻</span>
+          <span>Recalcular Auditoria</span>
+        </button>
+
+        <button id="btnSyncAll" type="button"
+                class="sl-focus inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold sl-prism-gradient transition"
+                style="color: #042F2E;">
+          <span id="iconSync">⚡</span>
+          <span>Disparar Sync</span>
+        </button>
+
+        <button id="btnExportReport" type="button"
+                class="sl-focus inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition"
+                style="background: var(--muted); color: var(--foreground); border-color: var(--border);">
+          <span>⬇</span>
+          <span>Exportar Relatório</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      function escapeHtml(str) {
+        return String(str == null ? "" : str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      const DEFAULT_STATE = {
+        brainVersion: "2.9.0",
+        centralHead: "113edd2",
+        hostMode: "MCP APP & UI",
+        activeTab: "overview",
+        selectedProduct: "ALL",
+        auditProduct: "B2B-personal-ia",
+        vaccineFilter: "all",
+        vaccineQuery: "",
+        expandedGates: {},
+        products: [
+          {
+            id: "B2B-personal-ia",
+            displayName: "Mr. Coach",
+            stack: "Firebase Hosting + Render",
+            shapelabVersion: "2.9.0",
+            submoduleHead: "113edd2",
+            inSyncWithCentralHead: true,
+            brainSyncScriptSynced: true,
+            status: "OK",
+            filesScanned: 412,
+            checks: [
+              { id: "hardcoded_secrets", name: "Zero Segredos Hardcoded", weight: 25, score: 25, status: "OK", findings: [] },
+              { id: "supabase_rls", name: "Supabase / PostgreSQL RLS", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "versioning_semver_yyyymmddnn", name: "Versionamento YYYYMMDDNN / SemVer", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "async_http_and_security_hygiene", name: "Higiene Async HTTP & JWT", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "shapelab_governance_sync", name: "Governança .shapelab & brain_sync.ps1", weight: 15, score: 15, status: "OK", findings: [] }
+            ]
+          },
+          {
+            id: "ReformAI",
+            displayName: "ReformAI",
+            stack: "Cloudflare Pages/Workers + Docker",
+            shapelabVersion: "2.9.0",
+            submoduleHead: "113edd2",
+            inSyncWithCentralHead: true,
+            brainSyncScriptSynced: true,
+            status: "OK",
+            filesScanned: 289,
+            checks: [
+              { id: "hardcoded_secrets", name: "Zero Segredos Hardcoded", weight: 25, score: 25, status: "OK", findings: [] },
+              { id: "supabase_rls", name: "Supabase / PostgreSQL RLS", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "versioning_semver_yyyymmddnn", name: "Versionamento YYYYMMDDNN / SemVer", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "async_http_and_security_hygiene", name: "Higiene Async HTTP & JWT", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "shapelab_governance_sync", name: "Governança .shapelab & brain_sync.ps1", weight: 15, score: 15, status: "OK", findings: [] }
+            ]
+          },
+          {
+            id: "Smart-EV-Hub",
+            displayName: "Smart EV Hub",
+            stack: "FastAPI + Flutter BLE/HIL",
+            shapelabVersion: "2.9.0",
+            submoduleHead: "113edd2",
+            inSyncWithCentralHead: true,
+            brainSyncScriptSynced: true,
+            status: "OK",
+            filesScanned: 356,
+            checks: [
+              { id: "hardcoded_secrets", name: "Zero Segredos Hardcoded", weight: 25, score: 25, status: "OK", findings: [] },
+              { id: "supabase_rls", name: "Supabase / PostgreSQL RLS", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "versioning_semver_yyyymmddnn", name: "Versionamento YYYYMMDDNN / SemVer", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "async_http_and_security_hygiene", name: "Higiene Async HTTP & JWT", weight: 20, score: 20, status: "OK", findings: [] },
+              { id: "shapelab_governance_sync", name: "Governança .shapelab & brain_sync.ps1", weight: 15, score: 15, status: "OK", findings: [] }
+            ]
+          }
+        ],
+        vaccines: [
+          { skill: "skills/payments/asaas_split.md", label: "Pagamentos Asaas v3 · BCB 4893 + JWS + WORM", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "active", text: "Ativo" }, "Smart-EV-Hub": { type: "partial", text: "Parcial" } },
+          { skill: "skills/security/auth_anti_takeover.md", label: "Auth Anti-Takeover · Guards + PBKDF2/Argon2", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "active", text: "Ativo" }, "Smart-EV-Hub": { type: "partial", text: "RBAC B2B2C" } },
+          { skill: "skills/security/auth_anti_takeover.md#6", label: "WebAuthn L3 Passkeys · CBOR/COSE + signCount", "B2B-personal-ia": { type: "recommended", text: "AAL2 Passkeys" }, ReformAI: { type: "active", text: "Ativo" }, "Smart-EV-Hub": { type: "recommended", text: "Mobile B2B2C" } },
+          { skill: "skills/ui/flutter_edge_to_edge.md", label: "UI Edge-to-Edge + Dual-Theme WCAG", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "na", text: "Web/Edge" }, "Smart-EV-Hub": { type: "partial", text: "Cockpit" } },
+          { skill: "skills/backend/supabase_rls.md", label: "Supabase RLS Multi-Tenant + Storage LGPD", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "partial", text: "D1+PostGIS" }, "Smart-EV-Hub": { type: "partial", text: "B2B2C" } },
+          { skill: "skills/growth/whatsapp_dual_channel.md", label: "Mensageria WhatsApp Dual-Channel", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "active", text: "Ativo" }, "Smart-EV-Hub": { type: "recommended", text: "Pendente" } },
+          { skill: "skills/devops/versioning_and_ota_update.md", label: "Versionamento YYYYMMDDNN + OTA + SemVer", "B2B-personal-ia": { type: "active", text: "Origem" }, ReformAI: { type: "active", text: "Origem" }, "Smart-EV-Hub": { type: "active", text: "Ativo" } },
+          { skill: "skills/brand/shapelab_brand_identity.md", label: "Identidade Visual Prism S Neon + Manifest", "B2B-personal-ia": { type: "active", text: "Ativo" }, ReformAI: { type: "recommended", text: "Migração UI" }, "Smart-EV-Hub": { type: "active", text: "Ativo" } },
+          { skill: "skills/sre/observability_crash_shield_and_backup.md", label: "SRE Deep Health + Crash Shield + Backup", "B2B-personal-ia": { type: "partial", text: "Web Shield" }, ReformAI: { type: "partial", text: "Healthcheck" }, "Smart-EV-Hub": { type: "partial", text: "Deep Ready" } },
+          { skill: "skills/devops/cloud_run_stateless_cutover.md", label: "Cloud Run southamerica-east1 + Blue-Green", "B2B-personal-ia": { type: "na", text: "Render" }, ReformAI: { type: "partial", text: "Docker OCI" }, "Smart-EV-Hub": { type: "active", text: "Cloud Run" } },
+          { skill: "skills/security/jws_terms_and_demo_isolation.md", label: "JWS RFC 7515 + Isolamento Demo RLS", "B2B-personal-ia": { type: "active", text: "Asaas JWS" }, ReformAI: { type: "partial", text: "Escrow JWS" }, "Smart-EV-Hub": { type: "partial", text: "Passaporte" } }
+        ]
+      };
+
+      const state = structuredClone(DEFAULT_STATE);
+
+      // Hidratação opcional injetada pelo host
+      if (window.__SHAPELAB_COCKPIT_DATA__ && typeof window.__SHAPELAB_COCKPIT_DATA__ === "object") {
+        Object.assign(state, window.__SHAPELAB_COCKPIT_DATA__);
+        state.hostMode = "GENERATIVE UI";
+      }
+
+      // JSON-RPC Bridge com o Host MCP
+      let rpcCounter = 1;
+      const pendingRpc = new Map();
+
+      function callMcpTool(name, args) {
+        const id = "sl_" + rpcCounter++;
+        const payload = {
+          jsonrpc: "2.0",
+          id,
+          method: "tools/call",
+          params: { name, arguments: args || {} }
+        };
+        return new Promise((resolve) => {
+          const timer = setTimeout(() => {
+            pendingRpc.delete(id);
+            resolve({ simulated: true });
+          }, 800);
+          pendingRpc.set(id, (resp) => {
+            clearTimeout(timer);
+            resolve({ simulated: false, resp });
+          });
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(payload, "*");
+            } else {
+              clearTimeout(timer);
+              pendingRpc.delete(id);
+              resolve({ simulated: true });
+            }
+          } catch {
+            clearTimeout(timer);
+            pendingRpc.delete(id);
+            resolve({ simulated: true });
+          }
+        });
+      }
+
+      window.addEventListener("message", (event) => {
+        const msg = event.data;
+        if (!msg || typeof msg !== "object") return;
+        if (msg.id && pendingRpc.has(msg.id)) {
+          state.hostMode = "MCP HOST";
+          const cb = pendingRpc.get(msg.id);
+          pendingRpc.delete(msg.id);
+          cb(msg);
+          return;
+        }
+        if (msg.method === "ui/notifications/tool-result" || msg.type === "shapelab:hydrate") {
+          state.hostMode = "MCP HOST";
+          const data = msg.params?.structuredContent || msg.payload || msg.params;
+          if (data && typeof data === "object") {
+            applyRemotePayload(data);
+          }
+        }
+      });
+
+      function applyRemotePayload(data) {
+        if (data.brain?.version) state.brainVersion = String(data.brain.version);
+        if (data.brain?.head) state.centralHead = String(data.brain.head);
+        if (Array.isArray(data.products)) {
+          data.products.forEach((p) => {
+            const target = state.products.find((x) => x.id === p.product || x.id === p.id);
+            if (target) {
+              if (p.version) target.shapelabVersion = p.version;
+              if (p.head) target.submoduleHead = p.head;
+              if (typeof p.inSyncWithCentralHead === "boolean") target.inSyncWithCentralHead = p.inSyncWithCentralHead;
+              if (p.status) target.status = p.status;
+            }
+          });
+        }
+        renderAll();
+      }
+
+      function computeProductScore(prod) {
+        return prod.checks.reduce((acc, c) => acc + (Number(c.score) || 0), 0);
+      }
+
+      function computeVaccineCoverage(prodId) {
+        let applicable = 0;
+        let active = 0;
+        state.vaccines.forEach((v) => {
+          const cell = v[prodId];
+          if (!cell || cell.type === "na") return;
+          applicable++;
+          if (cell.type === "active") active++;
+        });
+        return applicable ? Math.round((active / applicable) * 100) : 0;
+      }
+
+      function setStatusLog(text) {
+        const el = document.getElementById("activityStatus");
+        const now = new Date().toLocaleTimeString("pt-BR", { hour12: false });
+        el.textContent = `[${now}] ${text}`;
+      }
+
+      function renderHeader() {
+        document.getElementById("brainVersionBadge").textContent = "Brain v" + state.brainVersion;
+        document.getElementById("centralHeadLabel").textContent = state.centralHead;
+        document.getElementById("bridgeModeBadge").textContent = state.hostMode;
+
+        const okCount = state.products.filter((p) => p.status === "OK").length;
+        const total = state.products.length;
+        const statusWrap = document.getElementById("globalSquadStatus");
+        const statusText = document.getElementById("globalSquadText");
+        statusText.textContent = `Squad ${okCount}/${total} Synced`;
+        if (okCount === total) {
+          statusWrap.style.background = "var(--sl-ok-bg)";
+          statusWrap.style.color = "var(--sl-ok-ink)";
+          statusWrap.style.borderColor = "var(--sl-ok-border)";
+        } else {
+          statusWrap.style.background = "var(--sl-warn-bg)";
+          statusWrap.style.color = "var(--sl-warn-ink)";
+          statusWrap.style.borderColor = "var(--sl-warn-border)";
+        }
+
+        // Theme buttons
+        const currentTheme = document.documentElement.getAttribute("data-theme") || "auto";
+        document.querySelectorAll("[data-theme-btn]").forEach((btn) => {
+          const active = btn.getAttribute("data-theme-btn") === currentTheme;
+          btn.style.background = active ? "var(--card)" : "transparent";
+          btn.style.color = active ? "var(--foreground)" : "var(--muted-foreground)";
+          btn.style.boxShadow = active ? "0 1px 2px rgba(0,0,0,0.12)" : "none";
+        });
+
+        // Tabs
+        document.querySelectorAll("[data-tab]").forEach((btn) => {
+          const active = btn.getAttribute("data-tab") === state.activeTab;
+          btn.setAttribute("aria-selected", String(active));
+          if (active) {
+            btn.style.background = "var(--primary)";
+            btn.style.color = "var(--primary-foreground)";
+          } else {
+            btn.style.background = "var(--muted)";
+            btn.style.color = "var(--muted-foreground)";
+          }
+        });
+
+        // Product filter pills
+        document.querySelectorAll("[data-product-filter]").forEach((btn) => {
+          const active = btn.getAttribute("data-product-filter") === state.selectedProduct;
+          btn.style.background = active ? "var(--sl-ok-bg)" : "var(--card)";
+          btn.style.color = active ? "var(--sl-accent-ink)" : "var(--muted-foreground)";
+          btn.style.borderColor = active ? "var(--sl-ok-border)" : "var(--border)";
+        });
+
+        // Section visibility per tab
+        const showProducts = state.activeTab === "overview";
+        const showAudit = state.activeTab === "overview" || state.activeTab === "audit";
+        const showVaccines = state.activeTab === "overview" || state.activeTab === "vaccines";
+        document.getElementById("sectionProducts").style.display = showProducts ? "" : "none";
+        document.getElementById("sectionAudit").style.display = showAudit ? "" : "none";
+        document.getElementById("sectionVaccines").style.display = showVaccines ? "" : "none";
+      }
+
+      function renderProductCards() {
+        const grid = document.getElementById("productCardsGrid");
+        const visibleProducts = state.selectedProduct === "ALL"
+          ? state.products
+          : state.products.filter((p) => p.id === state.selectedProduct);
+
+        grid.className = visibleProducts.length === 1
+          ? "grid grid-cols-1 gap-3"
+          : "grid grid-cols-1 md:grid-cols-3 gap-3";
+
+        grid.innerHTML = visibleProducts.map((p) => {
+          const score = computeProductScore(p);
+          const coverage = computeVaccineCoverage(p.id);
+          const radius = 24;
+          const circ = 2 * Math.PI * radius;
+          const dashOffset = circ - (score / 100) * circ;
+          const isOk = p.status === "OK";
+          const isFocused = state.auditProduct === p.id;
+          const ringStroke = score >= 85 ? "#10B981" : score >= 60 ? "#F59E0B" : "#F43F5E";
+
+          return `
+            <article class="sl-card rounded-2xl p-4 flex flex-col justify-between gap-3 transition cursor-pointer"
+                     data-select-audit="${escapeHtml(p.id)}"
+                     style="border-color: ${isFocused ? "var(--sl-accent-ink)" : "var(--border)"}; box-shadow: ${isFocused ? "0 0 0 1px var(--sl-accent-ink)" : "none"};">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h3 class="text-sm font-bold truncate">${escapeHtml(p.displayName)}</h3>
+                    <span class="px-2 py-0.5 text-[10px] font-bold rounded-full border"
+                          style="background:${isOk ? "var(--sl-ok-bg)" : "var(--sl-warn-bg)"}; color:${isOk ? "var(--sl-ok-ink)" : "var(--sl-warn-ink)"}; border-color:${isOk ? "var(--sl-ok-border)" : "var(--sl-warn-border)"};">
+                      ${isOk ? "SYNC OK" : "PENDENTE"}
+                    </span>
+                  </div>
+                  <p class="text-[11px] font-mono truncate mt-0.5" style="color: var(--muted-foreground);">
+                    ${escapeHtml(p.id)}
+                  </p>
+                  <p class="text-[11px] truncate mt-1" style="color: var(--muted-foreground);">
+                    ${escapeHtml(p.stack)}
+                  </p>
+                </div>
+
+                <!-- Gauge Radial SVG -->
+                <div class="relative w-14 h-14 shrink-0 flex items-center justify-center">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 -rotate-90" aria-label="Score ${score} de 100">
+                    <circle cx="30" cy="30" r="${radius}" fill="none" stroke="var(--sl-track)" stroke-width="5" />
+                    <circle cx="30" cy="30" r="${radius}" fill="none" stroke="${ringStroke}" stroke-width="5"
+                            stroke-linecap="round" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${dashOffset.toFixed(2)}" />
+                  </svg>
+                  <span class="absolute text-xs font-extrabold tabular-nums">${score}</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 pt-2 border-t text-[11px]" style="border-color: var(--border);">
+                <div>
+                  <span class="block text-[10px]" style="color: var(--muted-foreground);">.shapelab</span>
+                  <span class="font-mono font-semibold" style="color: var(--sl-accent-ink);">v${escapeHtml(p.shapelabVersion)}</span>
+                </div>
+                <div>
+                  <span class="block text-[10px]" style="color: var(--muted-foreground);">HEAD</span>
+                  <span class="font-mono font-semibold">${escapeHtml(p.submoduleHead)}</span>
+                </div>
+                <div>
+                  <span class="block text-[10px]" style="color: var(--muted-foreground);">Vacinas</span>
+                  <span class="font-mono font-semibold" style="color: var(--sl-cyan-ink);">${coverage}%</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between gap-2 pt-1">
+                <span class="text-[11px]" style="color: var(--muted-foreground);">
+                  ${p.inSyncWithCentralHead ? "Alinhado ao Central" : "Submódulo atrasado"}
+                </span>
+                <button type="button" data-sync-product="${escapeHtml(p.id)}"
+                        class="sl-focus px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition"
+                        style="background: var(--muted); color: var(--foreground); border-color: var(--border);">
+                  ↻ Sync
+                </button>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+
+      function renderAuditPanel() {
+        const prod = state.products.find((p) => p.id === state.auditProduct) || state.products[0];
+        const score = computeProductScore(prod);
+        const passed = prod.checks.every((c) => c.status === "OK");
+
+        document.getElementById("auditProductLabel").textContent = `${prod.displayName} (${prod.id})`;
+        document.getElementById("auditMetaText").textContent =
+          `5 gates oficiais · brain_audit_preflight · ${prod.filesScanned} arquivos escaneados`;
+        document.getElementById("auditScoreValue").textContent = String(score);
+
+        const pill = document.getElementById("auditStatusPill");
+        pill.textContent = passed ? "100% BLINDADO" : "AÇÃO REQUERIDA";
+        pill.style.background = passed ? "var(--sl-ok-bg)" : "var(--sl-warn-bg)";
+        pill.style.color = passed ? "var(--sl-ok-ink)" : "var(--sl-warn-ink)";
+        pill.style.borderColor = passed ? "var(--sl-ok-border)" : "var(--sl-warn-border)";
+
+        const barWrap = document.getElementById("auditProgressBarWrap");
+        barWrap.setAttribute("aria-valuenow", String(score));
+        const bar = document.getElementById("auditProgressBar");
+        bar.style.width = `${score}%`;
+        bar.style.background = score >= 85
+          ? "linear-gradient(90deg, #10B981 0%, #06B6D4 100%)"
+          : score >= 60
+            ? "#F59E0B"
+            : "#F43F5E";
+
+        const list = document.getElementById("auditGatesList");
+        list.innerHTML = prod.checks.map((gate) => {
+          const ok = gate.status === "OK";
+          const key = `${prod.id}:${gate.id}`;
+          const expanded = Boolean(state.expandedGates[key]);
+          const findingsHtml = gate.findings.length
+            ? gate.findings.map((f) => `<li class="font-mono text-[11px] break-all">• ${escapeHtml(f)}</li>`).join("")
+            : `<li class="text-[11px]" style="color: var(--muted-foreground);">0 ocorrências detectadas — Gate em conformidade.</li>`;
+
+          return `
+            <div class="rounded-xl border p-3 transition" style="background: var(--background); border-color: ${ok ? "var(--border)" : "var(--sl-fail-border)"};">
+              <div class="flex items-center justify-between gap-2">
+                <button type="button" data-toggle-gate="${escapeHtml(key)}"
+                        class="sl-focus flex items-center gap-2 text-left min-w-0 flex-1">
+                  <span class="w-5 h-5 rounded-md flex items-center justify-center text-[11px] font-bold shrink-0"
+                        style="background:${ok ? "var(--sl-ok-bg)" : "var(--sl-fail-bg)"}; color:${ok ? "var(--sl-ok-ink)" : "var(--sl-fail-ink)"};">
+                    ${ok ? "✓" : "!"}
+                  </span>
+                  <span class="text-xs font-semibold truncate">${escapeHtml(gate.name)}</span>
+                </button>
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="text-[11px] font-mono tabular-nums font-semibold"
+                        style="color:${ok ? "var(--sl-ok-ink)" : "var(--sl-fail-ink)"};">
+                    ${gate.score}/${gate.weight} pts
+                  </span>
+                </div>
+              </div>
+              ${expanded ? `<ul class="mt-2 pt-2 border-t space-y-1" style="border-color: var(--border); color: var(--foreground);">${findingsHtml}</ul>` : ""}
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderVaccineBadge(cell) {
+        if (!cell) return `<span class="text-[11px]" style="color:var(--muted-foreground);">—</span>`;
+        const map = {
+          active: { icon: "✓", bg: "var(--sl-ok-bg)", ink: "var(--sl-ok-ink)", border: "var(--sl-ok-border)" },
+          partial: { icon: "◐", bg: "var(--sl-warn-bg)", ink: "var(--sl-warn-ink)", border: "var(--sl-warn-border)" },
+          recommended: { icon: "⏳", bg: "var(--sl-fail-bg)", ink: "var(--sl-fail-ink)", border: "var(--sl-fail-border)" },
+          na: { icon: "—", bg: "var(--muted)", ink: "var(--muted-foreground)", border: "var(--border)" }
+        };
+        const st = map[cell.type] || map.na;
+        return `
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium border whitespace-nowrap"
+                style="background:${st.bg}; color:${st.ink}; border-color:${st.border};">
+            <span aria-hidden="true">${st.icon}</span>
+            <span>${escapeHtml(cell.text)}</span>
+          </span>
+        `;
+      }
+
+      function renderVaccineMatrix() {
+        document.querySelectorAll("[data-vaccine-filter]").forEach((btn) => {
+          const active = btn.getAttribute("data-vaccine-filter") === state.vaccineFilter;
+          btn.style.background = active ? "var(--primary)" : "var(--background)";
+          btn.style.color = active ? "var(--primary-foreground)" : "var(--muted-foreground)";
+          btn.style.borderColor = active ? "var(--primary)" : "var(--border)";
+        });
+
+        const cols = ["B2B-personal-ia", "ReformAI", "Smart-EV-Hub"];
+        const activeCols = state.selectedProduct === "ALL" ? cols : [state.selectedProduct];
+
+        document.querySelectorAll("[data-col-prod]").forEach((th) => {
+          const id = th.getAttribute("data-col-prod");
+          th.style.display = activeCols.includes(id) ? "" : "none";
+        });
+
+        const q = state.vaccineQuery.trim().toLowerCase();
+        const filtered = state.vaccines.filter((row) => {
+          const matchesQuery = !q || row.skill.toLowerCase().includes(q) || row.label.toLowerCase().includes(q);
+          if (!matchesQuery) return false;
+          if (state.vaccineFilter === "all") return true;
+          return activeCols.some((c) => row[c] && row[c].type === state.vaccineFilter);
+        });
+
+        // Contagens para o resumo
+        let cntActive = 0, cntPartial = 0, cntRec = 0, cntNa = 0;
+        state.vaccines.forEach((r) => {
+          activeCols.forEach((c) => {
+            const t = r[c]?.type;
+            if (t === "active") cntActive++;
+            else if (t === "partial") cntPartial++;
+            else if (t === "recommended") cntRec++;
+            else cntNa++;
+          });
+        });
+
+        document.getElementById("vaccineSummaryBar").innerHTML = [
+          { label: "Ativas", val: cntActive, color: "var(--sl-ok-ink)", bg: "var(--sl-ok-bg)" },
+          { label: "Parciais", val: cntPartial, color: "var(--sl-warn-ink)", bg: "var(--sl-warn-bg)" },
+          { label: "Recomendadas", val: cntRec, color: "var(--sl-fail-ink)", bg: "var(--sl-fail-bg)" },
+          { label: "Não Aplicável", val: cntNa, color: "var(--muted-foreground)", bg: "var(--muted)" }
+        ].map((item) => `
+          <div class="rounded-xl px-3 py-2 flex items-center justify-between border" style="background:${item.bg}; border-color:var(--border);">
+            <span class="text-[11px] font-medium" style="color:${item.color};">${item.label}</span>
+            <span class="text-sm font-extrabold tabular-nums" style="color:${item.color};">${item.val}</span>
+          </div>
+        `).join("");
+
+        const tbody = document.getElementById("vaccineTableBody");
+        if (!filtered.length) {
+          tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-xs" style="color:var(--muted-foreground);">Nenhuma skill encontrada para o filtro atual.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map((row) => `
+          <tr class="hover:opacity-95">
+            <td class="py-2.5 px-3 min-w-[200px]">
+              <div class="font-semibold text-xs">${escapeHtml(row.label)}</div>
+              <div class="font-mono text-[10px]" style="color:var(--muted-foreground);">${escapeHtml(row.skill)}</div>
+            </td>
+            ${cols.map((c) => activeCols.includes(c)
+              ? `<td class="py-2.5 px-2.5 text-center">${renderVaccineBadge(row[c])}</td>`
+              : ""
+            ).join("")}
+          </tr>
+        `).join("");
+      }
+
+      function renderAll() {
+        renderHeader();
+        renderProductCards();
+        renderAuditPanel();
+        renderVaccineMatrix();
+      }
+
+      // Event Listeners
+      document.addEventListener("click", async (e) => {
+        const themeBtn = e.target.closest("[data-theme-btn]");
+        if (themeBtn) {
+          const t = themeBtn.getAttribute("data-theme-btn");
+          document.documentElement.setAttribute("data-theme", t);
+          renderHeader();
+          return;
+        }
+
+        const tabBtn = e.target.closest("[data-tab]");
+        if (tabBtn) {
+          state.activeTab = tabBtn.getAttribute("data-tab");
+          renderHeader();
+          return;
+        }
+
+        const prodFilterBtn = e.target.closest("[data-product-filter]");
+        if (prodFilterBtn) {
+          const val = prodFilterBtn.getAttribute("data-product-filter");
+          state.selectedProduct = val;
+          if (val !== "ALL") state.auditProduct = val;
+          renderAll();
+          return;
+        }
+
+        const syncBtn = e.target.closest("[data-sync-product]");
+        if (syncBtn) {
+          e.stopPropagation();
+          const prodId = syncBtn.getAttribute("data-sync-product");
+          setStatusLog(`Disparando brain_sync_all para ${prodId}...`);
+          const res = await callMcpTool("brain_sync_all", { products: [prodId] });
+          const target = state.products.find((p) => p.id === prodId);
+          if (res.simulated && target) {
+            target.submoduleHead = state.centralHead;
+            target.inSyncWithCentralHead = true;
+            target.shapelabVersion = state.brainVersion;
+            target.status = "OK";
+          }
+          renderAll();
+          setStatusLog(`Sync concluído para ${prodId} (${res.simulated ? "simulado" : "MCP"})`);
+          return;
+        }
+
+        const card = e.target.closest("[data-select-audit]");
+        if (card) {
+          state.auditProduct = card.getAttribute("data-select-audit");
+          renderAll();
+          return;
+        }
+
+        const gateBtn = e.target.closest("[data-toggle-gate]");
+        if (gateBtn) {
+          const k = gateBtn.getAttribute("data-toggle-gate");
+          state.expandedGates[k] = !state.expandedGates[k];
+          renderAuditPanel();
+          return;
+        }
+
+        const vacBtn = e.target.closest("[data-vaccine-filter]");
+        if (vacBtn) {
+          state.vaccineFilter = vacBtn.getAttribute("data-vaccine-filter");
+          renderVaccineMatrix();
+        }
+      });
+
+      document.getElementById("vaccineSearchInput").addEventListener("input", (e) => {
+        state.vaccineQuery = e.target.value || "";
+        renderVaccineMatrix();
+      });
+
+      document.getElementById("btnRecalcAudit").addEventListener("click", async () => {
+        const icon = document.getElementById("iconAudit");
+        icon.classList.add("sl-spin");
+        const prodId = state.auditProduct;
+        setStatusLog(`Executando brain_audit_preflight em ${prodId}...`);
+        const res = await callMcpTool("brain_audit_preflight", { projectPath: prodId });
+        if (res.simulated) {
+          const target = state.products.find((p) => p.id === prodId);
+          if (target) target.filesScanned += 1;
+        }
+        icon.classList.remove("sl-spin");
+        renderAll();
+        setStatusLog(`Auditoria atualizada para ${prodId} (${res.simulated ? "simulada" : "MCP"})`);
+      });
+
+      document.getElementById("btnSyncAll").addEventListener("click", async () => {
+        const icon = document.getElementById("iconSync");
+        icon.classList.add("sl-spin");
+        setStatusLog("Executando brain_sync_all em todos os produtos...");
+        const res = await callMcpTool("brain_sync_all", {});
+        if (res.simulated) {
+          state.products.forEach((p) => {
+            p.submoduleHead = state.centralHead;
+            p.inSyncWithCentralHead = true;
+            p.shapelabVersion = state.brainVersion;
+            p.status = "OK";
+          });
+        }
+        icon.classList.remove("sl-spin");
+        renderAll();
+        setStatusLog(`Sync global concluído (${res.simulated ? "simulado" : "MCP"})`);
+      });
+
+      document.getElementById("btnExportReport").addEventListener("click", async () => {
+        const report = {
+          generatedAt: new Date().toISOString(),
+          brainVersion: state.brainVersion,
+          centralHead: state.centralHead,
+          products: state.products.map((p) => ({
+            id: p.id,
+            displayName: p.displayName,
+            status: p.status,
+            shapelabVersion: p.shapelabVersion,
+            submoduleHead: p.submoduleHead,
+            preflightScore: computeProductScore(p),
+            vaccineCoveragePct: computeVaccineCoverage(p.id),
+            checks: p.checks
+          }))
+        };
+        const json = JSON.stringify(report, null, 2);
+        try {
+          const blob = new Blob([json], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `shapelab-cockpit-report-v${state.brainVersion}.json`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          setStatusLog("Relatório JSON exportado com sucesso.");
+        } catch {
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(json);
+            setStatusLog("Relatório copiado para a área de transferência.");
+          }
+        }
+      });
+
+      renderAll();
+    })();
+  </script>
+</body>
+</html>

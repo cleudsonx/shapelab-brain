@@ -2,6 +2,24 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.10.0] - 2026-11-24
+### Adicionado
+- **Cockpit Visual do Fundador (MCP App SEP-1865 & Generative UI):**
+  - Implementação da interface visual completa em `scripts/cockpit_app.html` e artefato standalone `shapelab_founder_cockpit.html` (Prism S Neon `#10B981` Emerald -> `#06B6D4` Cyan sobre Obsidian Canvas `#090D16`), com suporte total a Dual-Theme WCAG AA/AAA.
+  - Painel interativo com 3 tabs principais:
+    - *Visão Geral dos Produtos:* Cartões de métricas em tempo real (`B2B-personal-ia`, `ReformAI`, `Smart-EV-Hub`), badges de sincronia de submódulo (`ALIGNED` / `OUT_OF_SYNC`), versão do app extraída automaticamente de manifestos (`pubspec.yaml`, `pyproject.toml`, `package.json`), gauges de preflight audit (0-100) e atalhos de sincronização individual.
+    - *Auditoria Preflight:* Inspeção aprofundada dos 5 gates de segurança (Anti-Takeover / Segredos, Isolamento RLS / Tenants, Versionamento Monotônico, Conexões Assíncronas HTTP/JWT, Governança `.shapelab`), com listagem detalhada de checks aprovados e falhas.
+    - *Matriz de Vacinas & Polinização:* Visualização interativa da adoção de skills com busca textual por termos (`cbor`, `jws`, `asaas`, `ota`, etc.) e filtros por status (Todas, Ativas, Parciais, Pendentes).
+- **Tool `brain_cockpit` & Recurso `ui://cockpit/app.html`:**
+  - Exposição da tool nativa `brain_cockpit` no servidor MCP (`shapelab_brain_mcp.mjs`) com metadados UI (`resourceUri: "ui://cockpit/app.html"` e entrypoint `aux_pane: "ShapeLab Cockpit"`).
+  - Suporte a leitura direta do recurso HTML via `resources/read` e retorno de `structuredContent` hidratado com cache inteligente TTL de 15s.
+  - Bridge JSON-RPC bidirecional via `postMessage` permitindo ao Cockpit acionar `brain_sync_all` e `brain_audit_preflight` diretamente da UI.
+- **Exportação Executiva:** Botão de exportação instantânea do status consolidado de governança e preflight para JSON.
+
+### Alterado
+- **Matriz de Adoção (`memory/PRODUCT_MATRIX.md`):** Atualizado status de sincronia dos 3 produtos para `.shapelab v2.10.0`.
+- **Roteador `INDEX.md`:** Documentado o Cockpit Visual do Fundador e sua integração via MCP App no Side Pane.
+
 ## [2.9.0] - 2026-11-24
 ### Adicionado
 - **MCP Resources (`brain://...`):** Exposição nativa de recursos no servidor MCP (`shapelab_brain_mcp.mjs` v2.0.0) sob o protocolo 2024-11-05 com allowlist estrita e proteção anti-traversal em duas camadas:
