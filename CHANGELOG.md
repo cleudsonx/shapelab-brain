@@ -2,6 +2,11 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.5.0] - 2026-11-23
+### Adicionado
+- Suporte documentado ao servidor MCP nativo (`shapelab-brain` via `mcp_config.json` / `shapelab_brain_mcp.mjs`) e ao Firewall preventivo `PreToolUse` (`pre_tool_firewall.ps1`) do plugin `shapelab-os v3.1.0`.
+- Atualização da `memory/PRODUCT_MATRIX.md`: `Smart-EV-Hub` atualizado com `versioning_and_ota_update.md` (`update_version.dart` + `version.py` + `initAssetCacheGuard`) e `B2B-personal-ia` (`shapelab.ia.br`) + `Smart-EV-Hub` atualizados com identidade oficial **Prism S** (`shapelab_brand_identity.md`).
+
 ## [2.4.0] - 2026-11-23
 ### Adicionado
 - Matriz viva de adoção e polinização cruzada: `memory/PRODUCT_MATRIX.md`.

@@ -5,9 +5,9 @@ Esta matriz acompanha em tempo real quais capacidades do `shapelab-brain` já es
 ## 1. Status de Sincronia do `.shapelab` por Produto
 | Produto Comercial | Diretório / Repo | Versão `.shapelab` | Sync Automático | CI/Deploy Principal |
 | :--- | :--- | :--- | :--- | :--- |
-| **Mr. Coach** | `B2B-personal-ia` | `v2.4.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Firebase Hosting + Render |
-| **ReformAI** | `ReformAI` | `v2.4.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker |
-| **Smart EV Hub** | `Smart-EV-Hub` | `v2.4.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | FastAPI + Flutter BLE/HIL |
+| **Mr. Coach** | `B2B-personal-ia` | `v2.5.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Firebase Hosting + Render |
+| **ReformAI** | `ReformAI` | `v2.5.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker |
+| **Smart EV Hub** | `Smart-EV-Hub` | `v2.5.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | FastAPI + Flutter BLE/HIL |
 | **Tattoo SaaS** | `tattoo-saas` *(Planejado)* | — | Via scaffolding inicial | A definir |
 
 ---
@@ -23,8 +23,8 @@ Legenda: ✅ Em produção / ativo | 🟡 Parcial / em evolução | ⏳ Pendente
 | `skills/ui/flutter_edge_to_edge.md` (Edge-to-Edge + Dual-Theme WCAG) | ✅ Origem | ➖ (Web/Edge) | 🟡 (Flutter Cockpit) | ⏳ Planejado |
 | `skills/backend/supabase_rls.md` (Multi-tenant RLS + Storage LGPD) | ✅ Origem | 🟡 (D1 + Supabase) | 🟡 (Multi-Actor B2B2C) | ⏳ Planejado |
 | `skills/growth/whatsapp_dual_channel.md` (Meta Cloud + Evolution) | ✅ Origem | ✅ (Notificações WA) | ⏳ Pendente | ⏳ Planejado |
-| `skills/devops/versioning_and_ota_update.md` (`YYYYMMDDNN` + `SemVer+SHA`) | ✅ Origem (Flutter/PWA) | ✅ Origem (`version.py`) | ⏳ Pendente (`0.1.0+1` estático) | ⏳ Planejado |
-| `skills/brand/shapelab_brand_identity.md` (Prism S Neon + `brand_manifest.json`) | ⏳ Pendente migração visual | ⏳ Pendente migração visual | ⏳ Pendente migração visual | ⏳ Planejado |
+| `skills/devops/versioning_and_ota_update.md` (`YYYYMMDDNN` + `SemVer+SHA`) | ✅ Origem (Flutter/PWA) | ✅ Origem (`version.py`) | ✅ (`update_version.dart` + `version.py`) | ⏳ Planejado |
+| `skills/brand/shapelab_brand_identity.md` (Prism S Neon + `brand_manifest.json`) | ✅ (`shapelab.ia.br` + PWA) | ⏳ Pendente migração visual | ✅ (PWA Icons + `#090D16`) | ⏳ Planejado |
 
 ---
 
