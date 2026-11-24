@@ -1,4 +1,4 @@
-param (
+﻿param (
     [switch]$SyncProducts
 )
 
@@ -105,7 +105,7 @@ try {
 }
 
 $indexRaw = Get-Content (Join-Path $brainRoot "INDEX.md") -Raw -Encoding UTF8
-$refMatches = [regex]::Matches($indexRaw, '`((?:skills|memory|agents|templates|scripts)/[^`]+\.(?:md|ps1|sh|yml|json))`')
+$refMatches = [regex]::Matches($indexRaw, '`((?:skills|memory|agents|templates|scripts)/[^`]+\.(?:md|ps1|sh|yml|json|mjs|html))`')
 $missingRefs = @()
 foreach ($m in $refMatches) {
     $rel = $m.Groups[1].Value -replace '/', '\'

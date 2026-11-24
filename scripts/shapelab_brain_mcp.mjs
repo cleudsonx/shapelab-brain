@@ -6,6 +6,9 @@ import { execFile, execFileSync } from "node:child_process";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import { auditPreflight, AUDIT_IGNORED_DIRS } from "./ci_preflight_check.mjs";
+import { validateJws, FINTECH_VALIDATE_JWS_TOOL } from "./tools/fintech_jws.mjs";
+import { validateOtaManifest, OTA_VALIDATE_MANIFEST_TOOL } from "./tools/ota_manifest.mjs";
+import { checkFlutterCompat, FLUTTER_COMPAT_CHECK_TOOL } from "./tools/flutter_compat.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -941,6 +944,9 @@ const TOOLS = [
       },
     },
   },
+  FINTECH_VALIDATE_JWS_TOOL,
+  OTA_VALIDATE_MANIFEST_TOOL,
+  FLUTTER_COMPAT_CHECK_TOOL,
 ];
 
 function send(msg) {
@@ -1048,6 +1054,9 @@ rl.on("line", async (line) => {
       else if (name === "brain_propose_lesson") payload = proposeLesson(args);
       else if (name === "brain_audit_preflight") payload = auditPreflight(args);
       else if (name === "brain_sync_all") payload = await syncAllProducts(args);
+      else if (name === "fintech_validate_jws") payload = validateJws(args);
+      else if (name === "ota_validate_manifest") payload = validateOtaManifest(args);
+      else if (name === "flutter_compat_check") payload = checkFlutterCompat(args);
       else {
         return send({
           jsonrpc: "2.0",

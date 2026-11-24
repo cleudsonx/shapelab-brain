@@ -2,6 +2,17 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.12.0] - 2026-11-24
+### Adicionado
+- **MCPs Verticais de Domínio no Servidor MCP Nativo (Opção C):**
+  - Implementação modular de 3 ferramentas de alta precisão em `scripts/tools/` (Zero-Dependencies, Node.js ESM puro):
+    - `fintech_validate_jws` (`scripts/tools/fintech_jws.mjs`): Validação completa de JWS Compact Serialization (RFC 7515). Proteção Zero-Trust contra `alg: none`, Key Confusion, injeção de headers críticos (`jwk`, `jku`, `x5u`, `x5c`, `crit`) e base64url não-canônico. Verificação criptográfica nativa via `node:crypto` (ES256/ES384/ES512 IEEE P1363, RS256/RS384/RS512, PS256/PS384/PS512 e HS256/HS384/HS512), conferência estrita de janela temporal (`exp`/`nbf`/`iat`) e claims obrigatórias de negócio (ex.: `idempotency_key`, `amount`, `kid`).
+    - `ota_validate_manifest` (`scripts/tools/ota_manifest.mjs`): Validação de conformidade OTA PWA e cache-busting. Checagem de integridade de `version.json`, sincronia estrita com `pubspec.yaml` (`X.Y.Z+YYYYMMDDNN`), regra monotônica 32-bit safe (`YYYYMMDDNN <= 2147483647`), headers anti-cache (`firebase.json`, `render.yaml`, Cloudflare `_headers`) para manifestos e `index.html`, e detecção de cache-busting em assets estáticos.
+    - `flutter_compat_check` (`scripts/tools/flutter_compat.mjs`): Auditoria estática de código Flutter/Dart. Varredura de barrel adapter `material_compat.dart` (prevenindo colisões entre `material_ui` e `flutter/material`), regras estritas em `analysis_options.yaml` (`fatal_infos: true`), suporte a Edge-to-Edge (`SystemUiMode.edgeToEdge` + `SafeArea` interno a `Scaffold`) e contraste WCAG AA (>= 4.5:1) com tokens Prism S Neon (`#10B981`, `#06B6D4`, `#090D16`).
+  - Registro de todas as ferramentas no servidor MCP central (`scripts/shapelab_brain_mcp.mjs`) e no plugin global `shapelab-os` (`v3.5.0`).
+  - Suíte de testes automatizada JSON-RPC validando as novas tools com simulações reais de tokens HMAC, rejeição de algoritmos inseguros e auditoria nos repositórios dos produtos.
+
+
 ## [2.11.0] - 2026-11-24
 ### Adicionado
 - **Preflight CI Gate nos Workflows GitHub Actions (Opção B):**
