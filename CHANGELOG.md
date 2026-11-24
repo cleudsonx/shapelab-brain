@@ -2,6 +2,12 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.6.0] - 2026-11-23
+### Adicionado
+- **Inovação #3 (Zero-to-SaaS):** Scaffolder `scripts/new_shapelab_saas.ps1` gerando estrutura completa (FastAPI + Flutter Edge-to-Edge + Prism S + `.shapelab` + `update_version.dart`/`version.py` com `release_delta.json`).
+- **Inovação #4 (`release_delta.json`):** Integração de extrator de delta de release em `shapelab-os v3.2.0` (`post_tool_observer.ps1` + `shapelab-brain-curator.md`) e `scripts/version.py --delta`.
+- **Inovação #5 (Scanner de Vacinas):** `scripts/brain_vaccines.ps1` + workflow semanal `.github/workflows/vaccine_audit.yml` para auditoria automatizada de adoção nos repositórios.
+
 ## [2.5.0] - 2026-11-23
 ### Adicionado
 - Suporte documentado ao servidor MCP nativo (`shapelab-brain` via `mcp_config.json` / `shapelab_brain_mcp.mjs`) e ao Firewall preventivo `PreToolUse` (`pre_tool_firewall.ps1`) do plugin `shapelab-os v3.1.0`.

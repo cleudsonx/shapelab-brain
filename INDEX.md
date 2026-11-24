@@ -32,6 +32,8 @@
 - **Tecnologias aprovadas vs. banidas:** `memory/TECH_RADAR.md`
 - **Protocolo de autoatualização do Brain (Rubrica 0–10 + Hooks):** `memory/BRAIN_EVOLUTION_PROTOCOL.md`
 - **Diagnóstico de saúde e sincronia multi-produto:** `scripts/brain_doctor.ps1`
+- **Scanner automático de vacinas pendentes:** `scripts/brain_vaccines.ps1`
+- **Scaffolder Zero-to-SaaS (novo produto completo):** `scripts/new_shapelab_saas.ps1`
 - **Decisões Arquiteturais (ADRs):** `memory/adrs/ADR-001-shapelab-agent-os.md`
 - **Criar uma nova Skill:** `templates/skill_template.md`
 - **Especificar um novo MVP ou Feature (Spec-First):** `templates/prd_mvp.md`
