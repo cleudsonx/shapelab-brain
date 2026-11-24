@@ -58,3 +58,16 @@ USING (
 1. Tenant A tentando ler/alterar dados do Tenant B -> `[]` / `0 rows affected`.
 2. Cliente 1 tentando ler dados ou mídia do Cliente 2 no mesmo tenant -> `[]`.
 3. Supabase Security Advisor retorna zero tabelas de negócio com `rowsecurity = false`.
+
+## 6. Blindagem Anti-IDOR no Backend (Prevenção do Ponto Cego do `service_role`)
+Quando o backend FastAPI/Node utiliza a chave `service_role` (`SUPABASE_SECRET_KEY`), o PostgreSQL **ignora completamente o RLS** (`BYPASSRLS`).
+Portanto:
+1. **Filtro Explícito em Toda Mutação:** Toda query de `update` ou `delete` DEVE conter `.eq("tenant_id", caller_id)` ou `.eq("owner_id", caller_id)`, mesmo que a rota já tenha validado permissão.
+2. **Guardas Server-Side Fail-Closed:**
+   - Se o registro não existir ou não tiver vínculo comprovado em ambiente de produção, negue com `HTTP 403 Forbidden` por padrão (Fail-Closed).
+   - Bloqueie sentinelas de desenvolvimento (`"current-trainer"`, `"dev-user-*"`) estritamente quando `ENVIRONMENT == "production"`.
+3. **Prevenção de Sequestro de Vínculo (Cross-Tenant Hijacking):**
+   - Em cadastros rápidos ou checkouts públicos, se o cliente/aluno já possuir uma conta com `tenant_id` diferente, **NUNCA sobrescreva** silenciosamente o vínculo principal no profile.
+4. **Gotcha de Concorrência Multi-Worker:**
+   - Locks locais em memória (`asyncio.Lock`) protegem apenas a instância atual. Em arquiteturas com réplicas concorrentes (Cloud Run / Kubernetes), a atomicidade DEVE residir em locks pessimistas no banco (`SELECT ... FOR UPDATE` / CAS) ou Durable Leases distribuídos.
+

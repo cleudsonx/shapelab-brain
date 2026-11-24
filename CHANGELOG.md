@@ -3,8 +3,13 @@
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
 ## [2.8.1] - 2026-11-24
+### Adicionado
+- **Blindagem Anti-IDOR sob `service_role`:** Adicionada Seção 6 em `skills/backend/supabase_rls.md` documentando a prevenção do ponto cego do `service_role` (que ignora RLS do Postgres), com exigência de escopo explícito `.eq("tenant_id", caller_id)` em mutações, guardas server-side fail-closed e proteção contra sequestro cross-tenant de vínculos em checkout público.
+- **Padrão Concorrência Durable Lease & Cota IA:** Documentação do padrão Durable Lease (`claim_token` UUID + TTL + RPC de liberação em falha transitória) para idempotência estrita de webhooks de pagamento (zero double-credit) e padrão *Reserve-Execute-Release* atômico para cotas de IA sem race condition.
+- **Lições Aprendidas:** Registradas lições `LL-011` (Anti-IDOR sob `service_role` + Fail-Closed) e `LL-012` (Durable Lease & Reserva Atômica de Cota IA) em `memory/LESSONS_LEARNED.md`.
+
 ### Alterado
-- **Matriz de Adoção (`memory/PRODUCT_MATRIX.md`):** Atualizado status do `ReformAI` para `.shapelab v2.8.0`, registrando cobertura de `auth_anti_takeover.md` (`_guard.ts` + PBKDF2 + `node-rbac-guard.ts`), `supabase_rls.md` (`D1 + Supabase PostGIS`) e entregas `P3.2`/`P3.3`/`P3.4`.
+- **Matriz de Adoção (`memory/PRODUCT_MATRIX.md`):** Atualizado status do `ReformAI` para `.shapelab v2.8.0`, registrando cobertura de `auth_anti_takeover.md` (`_guard.ts` + PBKDF2 + `node-rbac-guard.ts`), `supabase_rls.md` (`D1 + Supabase PostGIS`) e entregas `P3.2`/`P3.3`/`P3.4`, e `Mr. Coach` atualizado para `v2.8.1`.
 
 ## [2.8.0] - 2026-11-24
 ### Adicionado
