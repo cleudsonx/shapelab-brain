@@ -309,6 +309,11 @@ class ShapeLabApp extends StatelessWidget {
 }
 "@
 
+    Write-Utf8 "mobile\lib\core\ui\material_compat.dart" @"
+// Barrel Adapter único de compatibilidade Material (padrão ShapeLab)
+export 'package:flutter/material.dart';
+"@
+
     Write-Utf8 "mobile\web\index.html" @"
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -316,12 +321,17 @@ class ShapeLabApp extends StatelessWidget {
   <base href="\$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090D16">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
   <meta name="theme-color" content="#090D16">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
   <title>$DisplayName • ShapeLab</title>
 </head>
 <body style="background-color:#090D16;margin:0;">
+  <div id="shapelab-splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#090D16;transition:opacity .25s ease;">
+    <img src="icons/Icon-192.png" alt="ShapeLab" width="88" height="88" style="filter:drop-shadow(0 0 18px rgba(16,185,129,.35)) drop-shadow(0 0 28px rgba(6,182,212,.25));" />
+  </div>
   <script>
     const APP_CURRENT_BUILD = 1;
     (function initAssetCacheGuard() {
@@ -336,6 +346,20 @@ class ShapeLabApp extends StatelessWidget {
           return orig.apply(this, arguments);
         };
       }
+      function hideSplash() {
+        var el = document.getElementById('shapelab-splash');
+        if (!el) return;
+        el.style.opacity = '0';
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+      }
+      window.addEventListener('flutter-first-frame', hideSplash, { once: true });
+      setTimeout(hideSplash, 6000);
+      window.syncPwaThemeColor = function (isDark) {
+        var color = isDark ? '#090D16' : '#F8FAFC';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute('content', color);
+        });
+      };
     })();
   </script>
   <script src="flutter_bootstrap.js" async></script>

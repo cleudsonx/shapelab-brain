@@ -26,6 +26,9 @@ Legenda: ✅ Em produção / ativo | 🟡 Parcial / em evolução | ⏳ Pendente
 | `skills/growth/whatsapp_dual_channel.md` (Meta Cloud + Evolution) | ✅ Origem | ✅ (Notificações WA) | ⏳ Pendente | ⏳ Planejado |
 | `skills/devops/versioning_and_ota_update.md` (`YYYYMMDDNN` + `SemVer+SHA`) | ✅ Origem (Flutter/PWA) | ✅ Origem (`version.py`) | ✅ (`update_version.dart` + `version.py`) | ⏳ Planejado |
 | `skills/brand/shapelab_brand_identity.md` (Prism S Neon + `brand_manifest.json`) | ✅ (`shapelab.ia.br` + PWA) | ⏳ Pendente migração visual | ✅ (PWA Icons + `#090D16`) | ⏳ Planejado |
+| `skills/sre/observability_crash_shield_and_backup.md` (Deep Health + HTTP 500 Shield) | 🟡 (Crash Shield Web) | 🟡 (Healthcheck) | 🟡 (Deep Ready / Crash Shield) | ⏳ Planejado |
+| `skills/devops/cloud_run_stateless_cutover.md` (Cloud Run `southamerica-east1` + Blue-Green) | ➖ (Render) | 🟡 (Docker OCI) | ✅ (Cloud Run Deploy) | ⏳ Planejado |
+| `skills/security/jws_terms_and_demo_isolation.md` (JWS RFC 7515 + Isolamento Demo RLS) | ✅ (Asaas Split JWS) | 🟡 (Escrow JWS) | 🟡 (Passaporte WORM) | ⏳ Planejado |
 
 ---
 

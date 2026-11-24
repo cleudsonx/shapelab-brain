@@ -94,3 +94,27 @@ class EdgeToEdgeScaffold extends StatelessWidget {
 1. Fundo/header estende-se por trás do relógio e da barra de gestos sem faixas sólidas tanto no tema Dark quanto no Light.
 2. Ícones da barra de status alternam automaticamente entre claros e escuros ao trocar o tema do app.
 3. `flutter analyze` com zero avisos e widget tests validando ausência de `RenderFlex overflowed`.
+
+## 6. Compatibilidade Multi-SDK (`package:material_ui` vs `flutter/material.dart`) e Conformidade `--fatal-infos`
+
+### 6.1 Barrel Adapter por Aplicativo (`lib/core/ui/material_compat.dart`)
+> **Restrição Dart:** `import '...' if (...)` avalia apenas bibliotecas do runtime (`dart.library.*`) e não detecta dependências do `pubspec.yaml`. Para apps multi-SDK, utilize um Barrel Adapter local único:
+
+```dart
+// lib/core/ui/material_compat.dart
+// Opção A — Flutter clássico (ex: B2B-personal-ia):
+export 'package:flutter/material.dart';
+
+// Opção B — Material desacoplado (ex: Smart-EV-Hub com SDK ^3.8.0 e material_ui: ^1.11.1):
+// export 'package:material_ui/material_ui.dart';
+```
+
+### 6.2 Tabela de Conformidade com `dart analyze --fatal-infos`
+| API Legada (depreciação recente) | Substituição Moderna (Flutter 3.29+ / Dart 3.8+) | Compatibilidade Universal (>= 3.24) |
+| :--- | :--- | :--- |
+| `color.withOpacity(0.5)` | `color.withValues(alpha: 0.5)` | `.withAlpha(128)` funciona sem warnings em todas as versões. |
+| `DropdownButtonFormField(value: v)` | `DropdownButtonFormField(initialValue: v)` | Fixar `flutter-version` no CI alinhada ao SDK. |
+| `Radio(groupValue: g, ...)` | `RadioGroup<T>(groupValue: g, child: ...)` | Obrigatório para acessibilidade em SDKs modernos. |
+| `WillPopScope(...)` | `PopScope(canPop: ..., onPopInvokedWithResult: ...)` | Padrão oficial desde Flutter 3.22+. |
+| `MaterialStateProperty` | `WidgetStateProperty` | Padrão oficial desde Flutter 3.22+. |
+

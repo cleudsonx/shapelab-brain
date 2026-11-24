@@ -9,9 +9,10 @@ Diretrizes técnicas e de governança inegociáveis aplicáveis a todos os produ
 
 ## 2. Stack Padrão e Infraestrutura Real
 - **Frontend Mobile/Web/PWA:** Flutter (arquitetura limpa, responsiva, suporte a Edge-to-Edge, Dual-Theme Dark/Light com contraste WCAG e cache offline resiliente) ou Web/Edge leve no Cloudflare Pages quando aplicável (ex: landing/simuladores do ReformAI).
-- **Backend / APIs / Edge:** Python 3.11 (FastAPI) com tipagem estrita (Pydantic v2) e operações assíncronas (`async/await` + `httpx.AsyncClient`), complementado por Cloudflare Workers em rotas de borda.
+- **Backend / APIs / Edge:** Python 3.11 (FastAPI) com tipagem estrita (Pydantic v2) e operações assíncronas (`async/await` + `httpx.AsyncClient`), hospedado no Google Cloud Run (`southamerica-east1` São Paulo para conformidade LGPD e baixa latência) ou Render, complementado por Cloudflare Workers em rotas de borda.
+- **Observabilidade & Resiliência SRE:** Deep Healthcheck desacoplado (`/health/live` responsivo sem consultar DB/Redis vs `/health/ready` paralelo com timeout <= 2s), sanitização total de erros HTTP 500 em produção (retornando apenas `correlation_id`), Crash Shield global no Flutter e desligamento gracioso (`SIGTERM` com dreno <= 9s).
 - **Banco de Dados & Storage:** Supabase (PostgreSQL + Auth + Storage Privado com RLS obrigatório).
-- **Pagamentos & Fintech (Brasil):** Asaas API v3 (Pix, Cartão, Assinaturas e Split) sob blindagem **BCB 4893**.
+- **Pagamentos & Fintech (Brasil):** Asaas API v3 (Pix, Cartão, Assinaturas e Split) sob blindagem **BCB 4893** e JWS RFC 7515 com isolamento estrito de contas `is_demo` / `demo_mode`.
 - **Mensageria Crítica:** Arquitetura Dual-Channel (Meta Cloud API Oficial como canal primário + Evolution API como fallback automático com *Graceful Degradation*).
 - **Inteligência Artificial:** Modelos Gemini via SDK oficial (`google-genai`), otimizando prompts para baixa latência, structured outputs e controle estrito de tokens.
 

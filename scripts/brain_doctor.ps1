@@ -1,4 +1,4 @@
-param (
+﻿param (
     [switch]$SyncProducts
 )
 
@@ -156,9 +156,10 @@ foreach ($prod in $products) {
         Report-Check "WARN" $prod ".shapelab em v$subVer ($($subHead.Substring(0,7))), central está em v$brainVersion ($($brainHead.Substring(0,7)))"
     }
 
-    $prodSyncHash = (Get-FileHash (Join-Path $prodPath "scripts\brain_sync.ps1") -Algorithm SHA256).Hash
-    $brainSyncHash = (Get-FileHash (Join-Path $brainRoot "scripts\brain_sync.ps1") -Algorithm SHA256).Hash
-    if ($prodSyncHash -eq $brainSyncHash) {
+    # Normaliza quebras de linha para comparação justa em ambientes Windows/Linux
+    $prodSyncRaw = if (Test-Path (Join-Path $prodPath "scripts\brain_sync.ps1")) { (Get-Content (Join-Path $prodPath "scripts\brain_sync.ps1") -Raw -Encoding UTF8) -replace "\r\n", "`n" } else { "" }
+    $brainSyncRaw = (Get-Content (Join-Path $brainRoot "scripts\brain_sync.ps1") -Raw -Encoding UTF8) -replace "\r\n", "`n"
+    if ($prodSyncRaw -eq $brainSyncRaw -and $prodSyncRaw.Length -gt 0) {
         Report-Check "OK" $prod "scripts/brain_sync.ps1 atualizado com a trava SemVer"
     } else {
         Report-Check "WARN" $prod "scripts/brain_sync.ps1 desatualizado em relação ao brain"

@@ -140,6 +140,13 @@ def compute_version_metadata():
 
 ### (e) Step no GitHub Actions (antes do `flutter build web`)
 ```yaml
+      - name: Setup Flutter SDK (Versão Pinada)
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "${{ vars.FLUTTER_VERSION || '3.29.3' }}"
+          channel: "stable"
+          cache: true
+
       - name: Auto-Versionamento PWA & Build Stamp
         run: |
           cd mobile
@@ -151,7 +158,37 @@ def compute_version_metadata():
           flutter build web --release --base-href "/" --dart-define=API_BASE_URL="${{ vars.API_BASE_URL }}"
 ```
 
+### (f) Splash Prism S Zero-FOUC + `syncPwaThemeColor` no `web/index.html`
+```html
+<!-- Splash instantânea Prism S sobre #090D16 removida no evento flutter-first-frame -->
+<div id="shapelab-splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#090D16;transition:opacity .25s ease;">
+  <img src="icons/Icon-192.png" alt="ShapeLab" width="88" height="88" style="filter:drop-shadow(0 0 18px rgba(16,185,129,.35)) drop-shadow(0 0 28px rgba(6,182,212,.25));" />
+</div>
+<script>
+  (function initSplashAndThemeBridge() {
+    function hideSplash() {
+      var el = document.getElementById('shapelab-splash');
+      if (!el) return;
+      el.style.opacity = '0';
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+    }
+    window.addEventListener('flutter-first-frame', hideSplash, { once: true });
+    setTimeout(hideSplash, 6000); // Failsafe para conexões lentas
+
+    window.syncPwaThemeColor = function (isDark) {
+      var color = isDark ? '#090D16' : '#F8FAFC';
+      document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+        m.setAttribute('content', color);
+      });
+      if (document.documentElement) document.documentElement.style.backgroundColor = color;
+      if (document.body) document.body.style.backgroundColor = color;
+    };
+  })();
+</script>
+```
+
 ## 5. Critério de Aceite e Testes Adversariais
 1. Executar `dart run tool/update_version.dart` gera `buildNumber` de 10 dígitos (`YYYYMMDDNN < 2147483647`), estritamente maior que o anterior, e atualiza todos os arquivos-alvo em sincronia.
 2. Emulação de deploy com `serverBuild > AppConfig.buildNumber` exibe o banner de atualização uma única vez; com `serverBuild <= AppConfig.buildNumber` executa `reset()` sem loop.
 3. No backend/CI, `version.py --github-output` e `--docker` produzem tags OCI válidas (`MAJOR.MINOR.PATCH-build.<run>.<sha>`).
+4. O `web/index.html` exibe `#shapelab-splash` instantâneo sem flash de tela branca (FOUC) e remove o overlay no primeiro frame do Flutter.

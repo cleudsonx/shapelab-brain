@@ -2,6 +2,17 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.8.0] - 2026-11-24
+### Adicionado
+- **Nova Skill SRE:** `skills/sre/observability_crash_shield_and_backup.md` cobrindo Deep Healthcheck (`/health/live` desacoplado de dependências vs `/health/ready` paralelo com timeout de 2s), sanitização estrita de HTTP 500 com `correlation_id` e redator de segredos, Crash Shield global para Flutter/Web com anti-flood de telemetria e política de backup contínuo Supabase (PITR + dump diário criptografado com AES-256 e restore drill).
+- **Nova Skill DevOps Cloud Run:** `skills/devops/cloud_run_stateless_cutover.md` padronizando deploy no Google Cloud Run na região `southamerica-east1` (São Paulo - conformidade LGPD e baixa latência), Dockerfile multi-stage com usuário non-root, graceful shutdown com captura de SIGTERM/SIGINT (dreno de requisições ativas até 9s) e estratégia Blue-Green Zero-Downtime com smoke test em `--tag=candidate` antes do corte de tráfego.
+- **Nova Skill Segurança Fintech & JWS:** `skills/security/jws_terms_and_demo_isolation.md` especificando assinatura RFC 7515 Compact Serialization (ES256/HS256) para transações financeiras e consentimentos LGPD/termos de aceite, com rotação de chaves em duas fases por `kid`, blindagem contra key confusion/alg-none e isolamento estrito de contas `is_demo` (RLS imutável em FKs compostas, anti-bypass de faturamento e redirecionamento de notificações para `demo_notification_sink`).
+- **Compatibilidade Multi-SDK Flutter & `--fatal-infos`:** Adicionada Seção 6 em `skills/ui/flutter_edge_to_edge.md` documentando Barrel Adapter `lib/core/ui/material_compat.dart` para interoperabilidade entre `package:flutter/material.dart` e `package:material_ui/material_ui.dart` (Dart ^3.8.0) e regras estritas para CI sem quebras.
+- **Splash Prism S Zero-FOUC & Scaffolder:** Atualizada `skills/devops/versioning_and_ota_update.md` e `scripts/new_shapelab_saas.ps1` com `#shapelab-splash` instantâneo em `#090D16` com remoção no evento `flutter-first-frame` e `syncPwaThemeColor`.
+- **Governança & Resiliência Git:** Criação de `.gitattributes` para normalização de quebras de linha (`eol=lf`), ajuste no `scripts/brain_doctor.ps1` para comparação justa de hashes ignorando variações CRLF/LF do Windows, e adição de `paths-ignore` FinOps nos workflows de CI/CD de `ReformAI` e `Smart-EV-Hub`.
+- **Lições Aprendidas:** Registradas lições `LL-008` (SRE / Probes), `LL-009` (Cloud Run / Graceful Shutdown) e `LL-010` (JWS RFC 7515 / Demo Isolation) em `memory/LESSONS_LEARNED.md`.
+- **Matriz de Adoção:** Atualizada `memory/PRODUCT_MATRIX.md` e `memory/TECH_RADAR.md` com as novas capacidades de produção.
+
 ## [2.7.0] - 2026-11-23
 ### Adicionado
 - Lição `LL-007` em `memory/LESSONS_LEARNED.md` e nova seção **WebAuthn L3 / Passkeys (CBOR/COSE & Anti-Clonagem)** em `skills/security/auth_anti_takeover.md` (`v1.1.0`), cobrindo decodificação CBOR/COSE sem dependências externas, validação estrita de `rpIdHash`/origem/assinatura ECDSA, consumo atômico de desafios em banco e revogação automática por regressão de `signCount`.
