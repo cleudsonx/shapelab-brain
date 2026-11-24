@@ -1,8 +1,8 @@
 ---
 id: skill-security-auth-anti-takeover
-version: 1.0.0
+version: 1.1.0
 status: production-verified
-last_verified: 2026-11-22
+last_verified: 2026-11-23
 origin_project: B2B-personal-ia
 compatible_subagent: shapelab-security-fintech
 stack: [python-3.11, fastapi, cloudflare-workers, typescript, web-crypto-pbkdf2, argon2id, rbac, aal2]
@@ -74,3 +74,11 @@ function hexToBytes(hex: string): Uint8Array {
 1. Submeter checkout público com e-mail de um `admin` ou `trainer` existente -> sistema cria a cobrança vinculada mas **não** altera senha, role nem retorna sessão sem autenticação.
 2. 6 tentativas seguidas de login com senha errada -> 6ª tentativa bloqueada com `429 Too Many Requests` e header `Retry-After`.
 3. Acesso a qualquer rota privada ou download de PDF/relatório sem `Authorization: Bearer <jwt_valido>` -> `401 Unauthorized` imediato.
+
+## 6. WebAuthn L3 / Passkeys (CBOR/COSE & Anti-Clonagem)
+- **Attestation Real:** decodificar `attestationObject` CBOR → `authData` → chave COSE (`ES256 -7` P-256 ou `RS256 -257` → SPKI PEM) sem depender de pacotes npm nativos em Edge Workers.
+- **Validação Estrita de Domínio e Presença:** conferir `rpIdHash === SHA-256(rpId)` em tempo constante, flags `UP` (`0x01`) e `UV` (`0x04`) e validação exata de `origin` (sem `includes()` frouxo).
+- **Assertion Criptográfica:** verificar assinatura DER/IEEE-P1363 sobre `authenticatorData || SHA-256(clientDataJSON)` contra a chave pública persistida.
+- **Anti-Replay Cross-Isolate:** persistir desafios no banco (D1/PostgreSQL) com TTL curto e consumo atômico único (`UPDATE ... SET consumed_at = ? WHERE challenge = ? AND consumed_at IS NULL AND expires_at > ?`, exigindo `changes === 1`).
+- **Anti-Clonagem (`signCount`):** se `(newSignCount > 0 || stored.signCount > 0) && newSignCount <= stored.signCount`, bloquear com `403` e marcar a credencial como `REVOKED` imediatamente (o caso `0/0` é aceito para Passkeys sincronizadas sem contador de hardware).
+- **Sessão Real:** nunca devolver token sintético (`jwt_biometric_*`); emitir sessão real na tabela de sessões (hash `SHA-256` no banco + cookie `HttpOnly; Secure; SameSite=Strict`) e registrar evento em auditoria.

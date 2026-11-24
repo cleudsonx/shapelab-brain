@@ -20,6 +20,7 @@ Legenda: ✅ Em produção / ativo | 🟡 Parcial / em evolução | ⏳ Pendente
 | :--- | :---: | :---: | :---: | :---: |
 | `skills/payments/asaas_split.md` (BCB 4893 + JWS + WORM) | ✅ Origem | ✅ (Asaas + Escrow) | 🟡 (Dual-Gateway Asaas + Efí) | ⏳ Planejado |
 | `skills/security/auth_anti_takeover.md` (Guards, PBKDF2/Argon2, AAL2) | ✅ Origem | ✅ (`_guard.ts` + PBKDF2) | 🟡 (RBAC B2B2C) | ⏳ Planejado |
+| `skills/security/auth_anti_takeover.md#6` (WebAuthn L3 Passkeys CBOR/COSE + `signCount`) | ⏳ Pendente (AAL2 Passkeys) | ✅ (`cbor-webauthn` + D1) | ⏳ Pendente (B2B2C Mobile) | ⏳ Planejado |
 | `skills/ui/flutter_edge_to_edge.md` (Edge-to-Edge + Dual-Theme WCAG) | ✅ Origem | ➖ (Web/Edge) | 🟡 (Flutter Cockpit) | ⏳ Planejado |
 | `skills/backend/supabase_rls.md` (Multi-tenant RLS + Storage LGPD) | ✅ Origem | 🟡 (D1 + Supabase) | 🟡 (Multi-Actor B2B2C) | ⏳ Planejado |
 | `skills/growth/whatsapp_dual_channel.md` (Meta Cloud + Evolution) | ✅ Origem | ✅ (Notificações WA) | ⏳ Pendente | ⏳ Planejado |

@@ -2,6 +2,11 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.7.0] - 2026-11-23
+### Adicionado
+- Lição `LL-007` em `memory/LESSONS_LEARNED.md` e nova seção **WebAuthn L3 / Passkeys (CBOR/COSE & Anti-Clonagem)** em `skills/security/auth_anti_takeover.md` (`v1.1.0`), cobrindo decodificação CBOR/COSE sem dependências externas, validação estrita de `rpIdHash`/origem/assinatura ECDSA, consumo atômico de desafios em banco e revogação automática por regressão de `signCount`.
+- Atualização da `memory/PRODUCT_MATRIX.md` registrando adoção de Passkeys WebAuthn L3 em `ReformAI` (✅) e recomendação pendente para `B2B-personal-ia` e `Smart-EV-Hub` (⏳).
+
 ## [2.6.0] - 2026-11-23
 ### Adicionado
 - **Inovação #3 (Zero-to-SaaS):** Scaffolder `scripts/new_shapelab_saas.ps1` gerando estrutura completa (FastAPI + Flutter Edge-to-Edge + Prism S + `.shapelab` + `update_version.dart`/`version.py` com `release_delta.json`).
