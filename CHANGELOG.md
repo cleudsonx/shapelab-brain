@@ -2,6 +2,20 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.13.0] - 2026-11-24
+### Adicionado
+- **Busca Semântica Híbrida no Servidor MCP (Opção D — `brain_semantic_search`):**
+  - Implementação da engine semântica híbrida em `scripts/tools/semantic_search.mjs` (Zero-Dependencies, Node.js ESM nativo):
+    - **Chunking Semântico com Máquina de Estados:** Rastreamento rigoroso de blocos de código (` ``` ` e `~~~`) prevenindo falsos cabeçalhos, divisão inteligente por seções `##` e `###`, e segmentação de tabelas em `LESSONS_LEARNED.md` preservando cabeçalhos em cada chunk.
+    - **Normalização e Dual-Tokenization:** Tratamento Unicode NFKD, remoção de diacríticos, preservação de identificadores compostos (`is_demo`, `amount_cents`, `anti-takeover`, `southamerica-east1`), splitting em camelCase/snake_case/kebab-case e extração automática de `domainIds` (`RFC-7515`, `BCB-4893`, `LL-xxx`).
+    - **Stopwords Bilíngues (PT-BR / EN):** Lista otimizada com allowlist de termos técnicos essenciais (`id`, `ip`, `db`, `ui`, `ux`, `qa`, `os`, `js`, `ts`, `rls`, `jwt`, `jws`, `ota`, `pwa`, `bcb`, `worm`, `mcp`).
+    - **Expansão de Sinônimos Conceituais ShapeLab:** Mapeamento determinístico de conceitos (ex.: `passkeys` ↔ `webauthn`/`cbor`/`signcount`, `double-spend` ↔ `durable lease`/`for update`/`idempotencia`, `tela-branca` ↔ `initassetcacheguard`/`ota`/`cache-busting`).
+    - **Ranqueamento Híbrido BM25+ & Vector Space:** BM25 com saturação $k_1 = 1.2$, $b = 0.75$, ponderação de campos (3.0x em títulos, 2.5x em tags/domínios, 1.0x no corpo) e pesos por tier, somado ao Cosine Similarity TF-IDF.
+    - **Fusão Recíproca de Ranks (RRF):** Algoritmo $\frac{1}{60 + Rank_{BM25}} + \frac{1}{60 + Rank_{Cosine}}$ com normalização de pontuação entre 0.0 e 1.0.
+  - **Gerador de Índice CLI (`scripts/build_semantic_index.mjs`):** Gera `memory/semantic_index.json` (123 chunks indexados em 15 categorias, tempo de geração < 100ms e carregamento < 5ms).
+  - **Tool MCP `brain_semantic_search`:** Exposta no servidor central (`shapelab_brain_mcp.mjs`) e no plugin `shapelab-os` (`v3.6.0`), suportando filtros estruturados por `category`, `docType`, `topK`, `minScore` e snippet inteligente (`fullText: false` padrão para máxima economia de tokens).
+
+
 ## [2.12.0] - 2026-11-24
 ### Adicionado
 - **MCPs Verticais de Domínio no Servidor MCP Nativo (Opção C):**

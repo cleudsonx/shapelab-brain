@@ -9,6 +9,7 @@ import { auditPreflight, AUDIT_IGNORED_DIRS } from "./ci_preflight_check.mjs";
 import { validateJws, FINTECH_VALIDATE_JWS_TOOL } from "./tools/fintech_jws.mjs";
 import { validateOtaManifest, OTA_VALIDATE_MANIFEST_TOOL } from "./tools/ota_manifest.mjs";
 import { checkFlutterCompat, FLUTTER_COMPAT_CHECK_TOOL } from "./tools/flutter_compat.mjs";
+import { semanticSearch, BRAIN_SEMANTIC_SEARCH_TOOL } from "./tools/semantic_search.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -947,6 +948,7 @@ const TOOLS = [
   FINTECH_VALIDATE_JWS_TOOL,
   OTA_VALIDATE_MANIFEST_TOOL,
   FLUTTER_COMPAT_CHECK_TOOL,
+  BRAIN_SEMANTIC_SEARCH_TOOL,
 ];
 
 function send(msg) {
@@ -1057,6 +1059,7 @@ rl.on("line", async (line) => {
       else if (name === "fintech_validate_jws") payload = validateJws(args);
       else if (name === "ota_validate_manifest") payload = validateOtaManifest(args);
       else if (name === "flutter_compat_check") payload = checkFlutterCompat(args);
+      else if (name === "brain_semantic_search") payload = semanticSearch(args);
       else {
         return send({
           jsonrpc: "2.0",
