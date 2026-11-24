@@ -2,6 +2,20 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.14.0] - 2026-11-24
+### Adicionado
+- **Brain Auto-Heal Engine (Inovação 1 — `brain_auto_heal` & CLI `--fix`):**
+  - Implementação de `scripts/tools/auto_heal.mjs` para autocorreção automática de conformidade pré-commit e pré-push.
+  - Correção autônoma de `analysis_options.yaml` (injeção de `fatal_infos: true`), sincronização de manifestos `version.json` e `pubspec.yaml` (32-bit safe `YYYYMMDDNN`), injeção de headers anti-cache `no-store` no `firebase.json` e alinhamento de scripts `brain_sync.ps1`.
+  - Suporte à flag `--fix` na CLI `scripts/ci_preflight_check.mjs`.
+- **Central Fleet Telemetry (Inovação 3 — `brain_fleet_telemetry`):**
+  - Implementação de `scripts/tools/fleet_telemetry.mjs` para monitoramento ativo e contínuo de endpoints em produção (Firebase/Render, Cloudflare, Cloud Run), medindo latência RTT em ms, headers de segurança HSTS/CSP e taxa de disponibilidade da frota.
+- **One-Click SaaS Generator (Inovação 4 — `brain_scaffold_saas`):**
+  - Implementação de `scripts/tools/scaffold_saas.mjs` permitindo a criação de um novo produto SaaS completo em segundos: inicialização Git, submódulo `.shapelab` apontado para o HEAD central, workflow de Preflight CI Gate configurado, manifestos e lints 100% blindados de fábrica.
+- **Total de 13 Ferramentas MCP Ativas:**
+  - Atualização do servidor central `scripts/shapelab_brain_mcp.mjs` e do plugin global `shapelab-os` (**v3.7.0**).
+
+
 ## [2.13.0] - 2026-11-24
 ### Adicionado
 - **Busca Semântica Híbrida no Servidor MCP (Opção D — `brain_semantic_search`):**

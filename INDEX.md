@@ -38,6 +38,7 @@
 - **Diagnóstico de saúde e sincronia multi-produto:** `scripts/brain_doctor.ps1`
 - **Servidor MCP nativo (Resources & Tools operacionais):** `scripts/shapelab_brain_mcp.mjs`
 - **Ferramentas MCP Verticais (JWS, OTA & Flutter):** `scripts/tools/fintech_jws.mjs`, `scripts/tools/ota_manifest.mjs`, `scripts/tools/flutter_compat.mjs`
+- **Motores Autônomos (Auto-Heal, Telemetria & SaaS Scaffolding):** `scripts/tools/auto_heal.mjs`, `scripts/tools/fleet_telemetry.mjs`, `scripts/tools/scaffold_saas.mjs`
 - **Busca Semântica Híbrida & Gerador de Índice:** `scripts/tools/semantic_search.mjs`, `scripts/build_semantic_index.mjs`
 - **CLI Autônoma Preflight CI Gate (Zero-deps & GitHub Actions):** `scripts/ci_preflight_check.mjs`
 - **Cockpit Visual do Fundador (MCP App no Side Pane / Generative UI):** `scripts/cockpit_app.html`

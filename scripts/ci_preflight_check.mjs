@@ -712,6 +712,7 @@ Flags:
                           (segredos hardcoded, RLS ausente/desabilitado, requests
                           síncrono em async def / JWT alg:none, ausência de .shapelab)
   --threshold=<0..100>    Score mínimo exigido para aprovação (padrão: ${DEFAULT_THRESHOLD})
+  --fix                   Auto-Healing: detecta e aplica correções canônicas automaticamente
   --warn-only             Executa em modo observacional: relata tudo mas sai com código 0
   --github-actions        Emite anotações ::error / ::warning e grava $GITHUB_STEP_SUMMARY
                           (ativado automaticamente quando GITHUB_ACTIONS=true)
@@ -730,6 +731,7 @@ Exit Codes:
 function parseCliArgs(argv) {
   let projectPath = null;
   let strict = false;
+  let autoFix = false;
   let warnOnly = false;
   let threshold = Number(process.env.SHAPELAB_PREFLIGHT_THRESHOLD || DEFAULT_THRESHOLD);
   let githubActions = process.env.GITHUB_ACTIONS === "true";
@@ -743,6 +745,8 @@ function parseCliArgs(argv) {
       help = true;
     } else if (arg === "--strict") {
       strict = true;
+    } else if (arg === "--fix") {
+      autoFix = true;
     } else if (arg === "--warn-only") {
       warnOnly = true;
     } else if (arg === "--github-actions") {
@@ -782,6 +786,7 @@ function parseCliArgs(argv) {
     help,
     projectPath: projectPath || process.cwd(),
     strict,
+    autoFix,
     warnOnly,
     threshold,
     githubActions,
@@ -965,7 +970,7 @@ function renderTerminalReport(result, { threshold, strict, warnOnly, approved, f
   process.stdout.write(out.join("\n"));
 }
 
-function main() {
+async function main() {
   const parsed = parseCliArgs(process.argv.slice(2));
   if (parsed.error) {
     process.stderr.write(`Erro de argumento: ${parsed.error}\nUse --help para ver as opções.\n`);
@@ -974,6 +979,22 @@ function main() {
   if (parsed.help) {
     printHelp();
     process.exit(0);
+  }
+
+  if (parsed.autoFix) {
+    try {
+      const { autoHealProject } = await import("./tools/auto_heal.mjs");
+      const healRes = autoHealProject({ projectPath: parsed.projectPath, apply: true });
+      if (!parsed.jsonOutput && healRes.patchesCount > 0) {
+        process.stdout.write(`\n🔧 [Auto-Heal] ${healRes.summary}\n`);
+        for (const p of healRes.patches) {
+          process.stdout.write(`   └─ [${p.rule}] ${p.file}: ${p.description}\n`);
+        }
+        process.stdout.write("\n");
+      }
+    } catch (healErr) {
+      process.stderr.write(`Aviso: Falha ao executar auto-heal: ${healErr?.message || healErr}\n`);
+    }
   }
 
   const result = auditPreflight({ projectPath: parsed.projectPath });
