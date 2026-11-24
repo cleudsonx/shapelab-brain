@@ -1,4 +1,4 @@
-﻿param (
+param (
     [Parameter(Mandatory = $true)]
     [ValidatePattern('^[a-z][a-z0-9-]{1,40}$')]
     [string]$Name,

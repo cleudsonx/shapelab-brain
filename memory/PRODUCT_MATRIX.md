@@ -5,9 +5,9 @@ Esta matriz acompanha em tempo real quais capacidades do `shapelab-brain` já es
 ## 1. Status de Sincronia do `.shapelab` por Produto
 | Produto Comercial | Diretório / Repo | Versão `.shapelab` | Sync Automático | CI/Deploy Principal |
 | :--- | :--- | :--- | :--- | :--- |
-| **Mr. Coach** | `B2B-personal-ia` | `v2.8.1` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Firebase Hosting + Render |
-| **ReformAI** | `ReformAI` | `v2.8.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker |
-| **Smart EV Hub** | `Smart-EV-Hub` | `v2.5.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | FastAPI + Flutter BLE/HIL |
+| **Mr. Coach** | `B2B-personal-ia` | `v2.9.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Firebase Hosting + Render |
+| **ReformAI** | `ReformAI` | `v2.9.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker |
+| **Smart EV Hub** | `Smart-EV-Hub` | `v2.9.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | FastAPI + Flutter BLE/HIL |
 | **Tattoo SaaS** | `tattoo-saas` *(Planejado)* | — | Via scaffolding inicial | A definir |
 
 ---

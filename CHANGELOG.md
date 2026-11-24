@@ -2,6 +2,19 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.9.0] - 2026-11-24
+### Adicionado
+- **MCP Resources (`brain://...`):** Exposição nativa de recursos no servidor MCP (`shapelab_brain_mcp.mjs` v2.0.0) sob o protocolo 2024-11-05 com allowlist estrita e proteção anti-traversal em duas camadas:
+  - `brain://constitution`: Devolve `CORE_CONSTITUTION.md` (`text/markdown`).
+  - `brain://brand/manifest`: Devolve `assets/brand/brand_manifest.json` (`application/json`).
+  - `brain://matrix`: Devolve `memory/PRODUCT_MATRIX.md` (`text/markdown`).
+  - `brain://tech-radar`: Devolve `memory/TECH_RADAR.md` (`text/markdown`).
+  - `brain://lessons`: Devolve `memory/LESSONS_LEARNED.md` (`text/markdown`).
+- **Nova Tool Operacional `brain_audit_preflight`:** Varredura local automatizada de conformidade (0-100 pts) validando ausência de segredos hardcoded mascarados, políticas de RLS no PostgreSQL/Supabase, conformidade de versionamento YYYYMMDDNN/SemVer, higiene assíncrona HTTP/JWT e sincronia de governança `.shapelab` + `brain_sync.ps1`.
+- **Nova Tool Operacional `brain_sync_all`:** Sincronização paralela robusta via `child_process.execFile` (sem shell interpolation e com mutex contra concorrência) para atualização atômica de `.shapelab` e `scripts/brain_sync.ps1` em `B2B-personal-ia`, `ReformAI` e `Smart-EV-Hub`.
+- **Blindagem Red-Team & Anti-DoS:** Validação estrita de caminhos (`isPathInside`), limites duros por arquivo (256 KB) e teto de arquivos (2000), teto de linha para prevenção de ReDoS e mascaramento automático de credenciais nos relatórios.
+- **Versão do Plugin `shapelab-os`:** Atualizado para `v3.3.0` com suporte nativo a Resources e Tools operacionais de auditoria e sincronização.
+
 ## [2.8.1] - 2026-11-24
 ### Adicionado
 - **Blindagem Anti-IDOR sob `service_role`:** Adicionada Seção 6 em `skills/backend/supabase_rls.md` documentando a prevenção do ponto cego do `service_role` (que ignora RLS do Postgres), com exigência de escopo explícito `.eq("tenant_id", caller_id)` em mutações, guardas server-side fail-closed e proteção contra sequestro cross-tenant de vínculos em checkout público.
