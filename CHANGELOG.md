@@ -2,6 +2,19 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.15.0] - 2026-11-24
+### Adicionado
+- **Lição Aprendida `LL-013` (`memory/LESSONS_LEARNED.md`):**
+  - Documentação do padrão arquitetural de resiliência para checkout de submódulo cross-repo (`.shapelab`) no GitHub Actions.
+  - Desacoplamento do checkout principal, injeção condicional de `SHAPELAB_BRAIN_PAT` (`url..insteadOf`), `continue-on-error: true` e fallback gracioso via `::notice` na ausência do secret em runners ou forks públicos.
+- **Resiliência no Template Preflight (`templates/github_workflow_ci_preflight.yml`):**
+  - Atualização do template oficial de CI Preflight Gate com checkout tolerante a falhas e verificação condicional de presença de `.shapelab/scripts/ci_preflight_check.mjs`.
+  - Suporte dinâmico a versão SemVer do Brain no scaffolding autônomo (`scripts/tools/scaffold_saas.mjs`).
+
+### Alterado
+- **Matriz de Produtos (`memory/PRODUCT_MATRIX.md`):**
+  - Registro da esteira GitHub Actions com Preflight Gate Resiliente no `ReformAI`.
+
 ## [2.14.0] - 2026-11-24
 ### Adicionado
 - **Brain Auto-Heal Engine (Inovação 1 — `brain_auto_heal` & CLI `--fix`):**

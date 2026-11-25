@@ -6,7 +6,7 @@ Esta matriz acompanha em tempo real quais capacidades do `shapelab-brain` já es
 | Produto Comercial | Diretório / Repo | Versão `.shapelab` | Sync Automático | CI/Deploy Principal |
 | :--- | :--- | :--- | :--- | :--- |
 | **Mr. Coach** | `B2B-personal-ia` | `v2.14.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Firebase Hosting + Render |
-| **ReformAI** | `ReformAI` | `v2.14.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker |
+| **ReformAI** | `ReformAI` | `v2.15.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | Cloudflare Pages/Workers + Docker + GH Actions Preflight Resiliente |
 | **Smart EV Hub** | `Smart-EV-Hub` | `v2.14.0` | `brain_sync.ps1` + `.github/workflows/brain_sync.yml` | FastAPI + Flutter BLE/HIL |
 | **Tattoo SaaS** | `tattoo-saas` *(Planejado)* | — | Via scaffolding inicial | A definir |
 

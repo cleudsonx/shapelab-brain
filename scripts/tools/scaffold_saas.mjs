@@ -82,6 +82,9 @@ export function scaffoldSaas({
 
   const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   const initialBuild = `${todayStr}01`;
+  const brainVersion = fs.existsSync(path.join(DEFAULT_BRAIN_ROOT, "VERSION"))
+    ? fs.readFileSync(path.join(DEFAULT_BRAIN_ROOT, "VERSION"), "utf8").trim()
+    : "2.15.0";
 
   // 1. README.md
   safeWrite(
@@ -91,7 +94,7 @@ export function scaffoldSaas({
 ${desc}
 
 [![ShapeLab Preflight](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml/badge.svg)](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml)
-[![ShapeLab Brain](https://img.shields.io/badge/ShapeLab%20Brain-v2.13.0-10B981?style=flat-square&logo=git)](https://github.com/cleudsonx/shapelab-brain)
+[![ShapeLab Brain](https://img.shields.io/badge/ShapeLab%20Brain-v${brainVersion}-10B981?style=flat-square&logo=git)](https://github.com/cleudsonx/shapelab-brain)
 [![Design System](https://img.shields.io/badge/Design%20System-Prism%20S%20Neon-06B6D4?style=flat-square)](https://shapelab.ia.br)
 
 ---
