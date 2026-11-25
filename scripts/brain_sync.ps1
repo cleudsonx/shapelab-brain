@@ -1,4 +1,4 @@
-﻿param (
+param (
     [ValidateSet("pull", "contribute")]
     [string]$Mode = "pull",
     [string]$Message = ""

@@ -2,6 +2,14 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.18.0] - 2026-11-25
+### Adicionado
+- **Skill de Token FinOps & Engenharia de Alta Alavancagem (`skills/ai/token_finops_high_leverage.md` + plugin `shapelab-os`):**
+  - Guia completo para maximizar produtividade, qualidade de código, velocidade, assertividade e inovação no pacote **Gemini 4 Pro / Antigravity** e na API Gemini em produção com custo mínimo de tokens.
+  - Inclui matriz de roteamento assimétrico (*Think with Pro, Grind with Flash*), higiene da janela de contexto ($O(T^2)$), batching radical por fase, template de prompt Spec-First de alta densidade, estratégias de produção (`Context Caching`, `response_schema`, `thinking_budget`, `Reserve-Execute-Release`) e checklist operacional.
+- **Governança & Indexação (`INDEX.md`, `memory/PRODUCT_MATRIX.md`, `memory/semantic_index.json`):**
+  - Skill catalogada em `INDEX.md`, marcada como ativa nos 3 produtos via plugin `shapelab-os` e indexada no motor semântico.
+
 ## [2.17.1] - 2026-11-25
 ### Corrigido & Blindagem FinOps CI/CD (`LL-014`)
 - **Proteção contra consumo indevido de cota do GitHub Actions:**

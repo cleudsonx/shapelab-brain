@@ -28,6 +28,7 @@
 | Deep Healthcheck, Sanitização HTTP 500, Crash Shield Flutter e Backup Supabase | `skills/sre/observability_crash_shield_and_backup.md` | `production-verified` | `shapelab-brain` |
 | Deploy Stateless no Cloud Run (`southamerica-east1`), Graceful Shutdown e Cutover Blue-Green | `skills/devops/cloud_run_stateless_cutover.md` | `production-verified` | `shapelab-brain` / `Smart-EV-Hub` |
 | Assinatura Criptográfica JWS (RFC 7515) para Transações/Termos e Isolamento Estrito Demo | `skills/security/jws_terms_and_demo_isolation.md` | `production-verified` | `shapelab-brain` |
+| Estratégia Token FinOps & Engenharia de Alta Alavancagem (Gemini 4 Pro / Antigravity / SDK) | `skills/ai/token_finops_high_leverage.md` | `production-verified` | `shapelab-brain` |
 
 ## 3. Memória Viva, Diagnóstico & Templates (`/memory`, `/scripts` e `/templates`)
 - **Incidentes resolvidos e padrões blindados:** `memory/LESSONS_LEARNED.md`
