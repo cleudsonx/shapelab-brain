@@ -2,6 +2,13 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.17.2] - 2026-11-25
+### Corrigido & Segurança de Mensageria (`LL-015`)
+- **Guardrail de Onboarding e Validação Temporal de Convites em Webhooks:**
+  - Padronizada a validação temporal estrita de convites pendentes (`expires_at > NOW()`) na identificação de remetentes de mensageria (WhatsApp/SMS).
+  - Implementado Guardrail de Onboarding *fail-closed* que intercepta interações e cliques de botões de convidados não cadastrados, orientando a ativação pelo link oficial do convite sem executar regras de negócio nem poluir o painel do profissional.
+  - Registrada a lição aprendida `LL-015` em `memory/LESSONS_LEARNED.md`.
+
 ## [2.17.1] - 2026-11-25
 ### Corrigido & Blindagem FinOps CI/CD (`LL-014`)
 - **Proteção contra consumo indevido de cota do GitHub Actions:**
