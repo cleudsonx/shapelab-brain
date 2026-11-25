@@ -71,7 +71,7 @@ elif [[ "$MODE" == "contribute" ]]; then
     git push origin main
   )
   git add .shapelab
-  git commit -m "chore(brain): update .shapelab pointer ($MESSAGE)"
+  git commit -m "chore(brain): update .shapelab pointer ($MESSAGE) [skip ci]"
   echo "Contribuição enviada ao shapelab-brain e ponteiro atualizado."
 else
   echo "Modo inválido: $MODE (use 'pull' ou 'contribute')" >&2

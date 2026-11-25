@@ -1,4 +1,4 @@
-param (
+﻿param (
     [ValidateSet("pull", "contribute")]
     [string]$Mode = "pull",
     [string]$Message = ""
@@ -116,6 +116,6 @@ elseif ($Mode -eq "contribute") {
 
     Write-Host "Atualizando ponteiro do submódulo no repositório produto..." -ForegroundColor Cyan
     git add .shapelab
-    git commit -m "chore(brain): update .shapelab pointer ($Message)"
+    git commit -m "chore(brain): update .shapelab pointer ($Message) [skip ci]"
     Write-Host "Contribuição enviada ao shapelab-brain e ponteiro atualizado no produto." -ForegroundColor Green
 }

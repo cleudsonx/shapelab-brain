@@ -268,6 +268,7 @@ const server = http.createServer(async (req, res) => {
         : [targetProd];
 
       const centralHead = getGitHead(BRAIN_ROOT);
+      const centralSyncScript = path.join(BRAIN_ROOT, 'scripts', 'brain_sync.ps1');
       for (const pid of prodsToSync) {
         const prodDir = path.resolve(BRAIN_ROOT, '..', pid);
         const submodDir = path.join(prodDir, '.shapelab');
@@ -275,9 +276,14 @@ const server = http.createServer(async (req, res) => {
           try {
             execFileSync('git', ['fetch', 'origin', 'main'], { cwd: submodDir, encoding: 'utf-8' });
             execFileSync('git', ['checkout', centralHead], { cwd: submodDir, encoding: 'utf-8' });
-            execFileSync('git', ['add', '.shapelab'], { cwd: prodDir, encoding: 'utf-8' });
+            if (fs.existsSync(centralSyncScript)) {
+              const destSyncDir = path.join(prodDir, 'scripts');
+              fs.mkdirSync(destSyncDir, { recursive: true });
+              fs.copyFileSync(centralSyncScript, path.join(destSyncDir, 'brain_sync.ps1'));
+            }
+            execFileSync('git', ['add', '.shapelab', 'scripts/brain_sync.ps1'], { cwd: prodDir, encoding: 'utf-8' });
             try {
-              execFileSync('git', ['commit', '-m', `chore(shapelab): sync submodule to ${centralHead}`], { cwd: prodDir, encoding: 'utf-8' });
+              execFileSync('git', ['commit', '-m', `chore(shapelab): sync submodule to ${centralHead} [skip ci]`], { cwd: prodDir, encoding: 'utf-8' });
             } catch {}
             results.push({ product: pid, status: 'SYNCED', head: centralHead });
           } catch (e) {

@@ -2,6 +2,13 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.17.1] - 2026-11-25
+### Corrigido & Blindagem FinOps CI/CD (`LL-014`)
+- **Proteção contra consumo indevido de cota do GitHub Actions:**
+  - Adicionado `'.shapelab'` (entrada gitlink do submódulo sem barra) junto a `'.shapelab/**'` no `paths-ignore` de `templates/github_workflow_ci_preflight.yml`, corrigindo o comportamento em que bumps de submódulo ainda disparavam esteiras CI em repositórios privados.
+  - Adicionado `[skip ci]` na mensagem de commit de atualização do ponteiro `.shapelab` em `scripts/brain_sync.ps1`, `scripts/brain_sync.sh` e `scripts/cockpit_server.mjs` (que também passa a sincronizar `scripts/brain_sync.ps1`).
+  - Documentada a Lição Aprendida `LL-014` em `memory/LESSONS_LEARNED.md` com reconstrução do índice semântico.
+
 ## [2.17.0] - 2026-11-25
 ### Alterado
 - **Arquitetura House of Brands & Endosso Institucional (`skills/brand/shapelab_brand_identity.md`, `assets/brand/brand_manifest.json`, `CORE_CONSTITUTION.md`):**
