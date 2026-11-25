@@ -4,6 +4,7 @@
  */
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { autoHealProject } from "./auto_heal.mjs";
@@ -35,6 +36,10 @@ export const BRAIN_SCAFFOLD_SAAS_TOOL = {
         type: "string",
         description: "Stack técnica: 'flutter-fastapi' (padrão) ou 'cloudflare-edge'",
       },
+      dryRun: {
+        type: "boolean",
+        description: "Se true, retorna apenas o plano de arquivos sem criar o diretório no disco.",
+      },
     },
     required: ["productName"],
   },
@@ -42,7 +47,17 @@ export const BRAIN_SCAFFOLD_SAAS_TOOL = {
 
 const DEFAULT_BRAIN_ROOT =
   process.env.SHAPELAB_BRAIN_ROOT ||
-  "c:\\Users\\Cleudson\\OneDrive\\Documentos\\PROJETOS 2026\\shapelab-brain";
+  path.join(os.homedir(), "OneDrive", "Documentos", "PROJETOS 2026", "shapelab-brain");
+
+function getBrainVersion() {
+  try {
+    const vPath = path.join(DEFAULT_BRAIN_ROOT, "VERSION");
+    if (fs.existsSync(vPath)) return fs.readFileSync(vPath, "utf8").trim() || "2.16.0";
+  } catch {
+    // fallback
+  }
+  return "2.16.0";
+}
 
 function safeWrite(filePath, content) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -55,6 +70,7 @@ export function scaffoldSaas({
   description,
   targetBaseDir,
   stack = "flutter-fastapi",
+  dryRun = false,
 } = {}) {
   if (!productName || typeof productName !== "string") {
     return { error: "Parâmetro 'productName' é obrigatório." };
@@ -66,25 +82,51 @@ export function scaffoldSaas({
     .replace(/[^a-z0-9_-]/g, "-")
     .replace(/^-+|-+$/g, "");
 
+  if (!cleanName) {
+    return { error: "Identificador 'productName' inválido." };
+  }
+
   const title = displayName || cleanName.replace(/(^|-)([a-z])/g, (_, a, b) => (a ? " " : "") + b.toUpperCase());
   const desc = description || `Produto SaaS oficial construído sobre a arquitetura ShapeLab Agent OS.`;
+  const brainVer = getBrainVersion();
 
   const baseDir = targetBaseDir
     ? path.resolve(targetBaseDir)
     : path.resolve(DEFAULT_BRAIN_ROOT, "..");
   const projectDir = path.join(baseDir, cleanName);
 
+  const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const initialBuild = `${todayStr}01`;
+
+  if (dryRun) {
+    const plannedFiles = [
+      "README.md",
+      "pubspec.yaml",
+      "web/version.json",
+      "analysis_options.yaml",
+      "scripts/brain_sync.ps1",
+      ".github/workflows/ci_preflight.yml",
+      ".shapelab (submodule)",
+    ];
+    return {
+      mode: "dry-run",
+      productName: cleanName,
+      displayName: title,
+      projectDir,
+      alreadyExists: fs.existsSync(projectDir),
+      stack,
+      brainVersion: brainVer,
+      initialVersion: `0.1.0+${initialBuild}`,
+      plannedFiles,
+      summary: `Preview: SaaS '${title}' (${cleanName}) pronto para criação em '${projectDir}' com Brain v${brainVer} e stack '${stack}'.`,
+    };
+  }
+
   if (fs.existsSync(projectDir)) {
     return { error: `Diretório do produto já existe: ${projectDir}` };
   }
 
   fs.mkdirSync(projectDir, { recursive: true });
-
-  const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-  const initialBuild = `${todayStr}01`;
-  const brainVersion = fs.existsSync(path.join(DEFAULT_BRAIN_ROOT, "VERSION"))
-    ? fs.readFileSync(path.join(DEFAULT_BRAIN_ROOT, "VERSION"), "utf8").trim()
-    : "2.15.0";
 
   // 1. README.md
   safeWrite(
@@ -94,7 +136,7 @@ export function scaffoldSaas({
 ${desc}
 
 [![ShapeLab Preflight](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml/badge.svg)](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml)
-[![ShapeLab Brain](https://img.shields.io/badge/ShapeLab%20Brain-v${brainVersion}-10B981?style=flat-square&logo=git)](https://github.com/cleudsonx/shapelab-brain)
+[![ShapeLab Brain](https://img.shields.io/badge/ShapeLab%20Brain-v${brainVer}-10B981?style=flat-square&logo=git)](https://github.com/cleudsonx/shapelab-brain)
 [![Design System](https://img.shields.io/badge/Design%20System-Prism%20S%20Neon-06B6D4?style=flat-square)](https://shapelab.ia.br)
 
 ---

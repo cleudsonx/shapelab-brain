@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "description": "Alvos oficiais de telemetria e healthcheck da frota ShapeLab",
+  "targets": [
+    {
+      "productId": "B2B-personal-ia",
+      "name": "Mr. Coach (PWA & Web)",
+      "url": "https://shapelab.ia.br/version.json",
+      "healthEndpoint": "https://shapelab.ia.br",
+      "provider": "Firebase Hosting + Render",
+      "stage": "production"
+    },
+    {
+      "productId": "ReformAI",
+      "name": "ReformAI (Marketplace)",
+      "url": "https://reformai.ia.br",
+      "healthEndpoint": "https://reformai.ia.br",
+      "provider": "Cloudflare Pages/Workers",
+      "stage": "production"
+    },
+    {
+      "productId": "Smart-EV-Hub",
+      "name": "Smart EV Hub (IoT Gateway)",
+      "url": "https://smart-ev-hub.shapelab.ia.br",
+      "fallbackUrl": "https://raw.githubusercontent.com/cleudsonx/Smart-EV-Hub/main/pubspec.yaml",
+      "healthEndpoint": "https://smart-ev-hub.shapelab.ia.br",
+      "provider": "Google Cloud Run",
+      "stage": "provisioning"
+    }
+  ]
+}

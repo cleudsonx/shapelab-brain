@@ -4,6 +4,7 @@
  */
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
 
@@ -57,7 +58,7 @@ export const BRAIN_SEMANTIC_SEARCH_TOOL = {
 
 const DEFAULT_BRAIN_ROOT =
   process.env.SHAPELAB_BRAIN_ROOT ||
-  "c:\\Users\\Cleudson\\OneDrive\\Documentos\\PROJETOS 2026\\shapelab-brain";
+  path.join(os.homedir(), "OneDrive", "Documentos", "PROJETOS 2026", "shapelab-brain");
 
 const BLACKLIST_FILES = new Set([
   "shapelab_brain_blueprint.md",

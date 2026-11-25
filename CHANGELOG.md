@@ -2,6 +2,23 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.16.0] - 2026-11-25
+### Adicionado
+- **ShapeLab OS v3.8.0 (`shapelab-os`) & Live Cockpit Server (`scripts/cockpit_server.mjs`):**
+  - Integração HTTP local (`http://127.0.0.1:3333`) com rotas reais `/api/sync`, `/api/auto-heal`, `/api/scaffold`, `/api/telemetry`, `/api/semantic-search` e `/api/audit`.
+  - Interface do Cockpit (`scripts/cockpit_app.html`) expandida com **7 abas**, incluindo **🏗️ Scaffold SaaS (1-Clique)**, listeners reais de re-auditoria (`btnAuditRunProduct` / `btnAuditRunGlobal`) e **Bridge Dual** (Live Server HTTP + MCP App `postMessage` SEP-1865).
+- **5º Healer Autônomo (`ci_preflight_workflow`) & Suporte a `vaccineType` (`scripts/tools/auto_heal.mjs`):**
+  - Correção do contrato `apply: true` no `cockpit_server.mjs` e injeção automática de `.github/workflows/ci_preflight.yml` via `templates/github_workflow_ci_preflight.yml`.
+- **Alvos de Telemetria Configuráveis (`memory/fleet_targets.json` + `scripts/tools/fleet_telemetry.mjs`):**
+  - Suporte a `stage: "production" | "provisioning"` com fallback de probe evitando falsos negativos enquanto domínios aguardam provisionamento.
+- **Suíte de Smoke Tests Automatizados (`scripts/test_plugin_mcp.mjs`):**
+  - Validação de ponta a ponta via JSON-RPC stdio das 13 tools MCP, 6 resources, portabilidade de caminhos e integridade da UI do Cockpit.
+
+### Alterado
+- **Portabilidade Zero-Hardcode & Governança (`hooks/session_start.ps1`, `scripts/brain_doctor.ps1`):**
+  - Substituição de caminhos absolutos de usuário por `os.homedir()` / `$HOME` e leitura dinâmica de versões em `plugin.json` e `VERSION`.
+  - Validação completa dos 4 scripts de hooks em `scripts/brain_doctor.ps1`.
+
 ## [2.15.0] - 2026-11-24
 ### Adicionado
 - **Lição Aprendida `LL-013` (`memory/LESSONS_LEARNED.md`):**

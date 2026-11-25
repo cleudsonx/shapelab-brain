@@ -32,6 +32,7 @@
 ## 3. Memória Viva, Diagnóstico & Templates (`/memory`, `/scripts` e `/templates`)
 - **Incidentes resolvidos e padrões blindados:** `memory/LESSONS_LEARNED.md`
 - **Índice Semântico Pré-Computado:** `memory/semantic_index.json`
+- **Alvos Oficiais de Telemetria da Frota:** `memory/fleet_targets.json`
 - **Matriz de adoção de skills por produto:** `memory/PRODUCT_MATRIX.md`
 - **Tecnologias aprovadas vs. banidas:** `memory/TECH_RADAR.md`
 - **Protocolo de autoatualização do Brain (Rubrica 0–10 + Hooks):** `memory/BRAIN_EVOLUTION_PROTOCOL.md`
@@ -41,7 +42,8 @@
 - **Motores Autônomos (Auto-Heal, Telemetria & SaaS Scaffolding):** `scripts/tools/auto_heal.mjs`, `scripts/tools/fleet_telemetry.mjs`, `scripts/tools/scaffold_saas.mjs`
 - **Busca Semântica Híbrida & Gerador de Índice:** `scripts/tools/semantic_search.mjs`, `scripts/build_semantic_index.mjs`
 - **CLI Autônoma Preflight CI Gate (Zero-deps & GitHub Actions):** `scripts/ci_preflight_check.mjs`
-- **Cockpit Visual do Fundador (MCP App no Side Pane / Generative UI):** `scripts/cockpit_app.html`
+- **Cockpit Visual do Fundador & Live Server:** `scripts/cockpit_app.html`, `scripts/cockpit_server.mjs`
+- **Suíte Automatizada de Smoke Tests (Plugin & MCP):** `scripts/test_plugin_mcp.mjs`
 - **Scanner automático de vacinas pendentes:** `scripts/brain_vaccines.ps1`
 - **Scaffolder Zero-to-SaaS (novo produto completo):** `scripts/new_shapelab_saas.ps1`
 - **Decisões Arquiteturais (ADRs):** `memory/adrs/ADR-001-shapelab-agent-os.md`

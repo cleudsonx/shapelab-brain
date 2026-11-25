@@ -1,4 +1,4 @@
-param (
+﻿param (
     [switch]$SyncProducts
 )
 
@@ -6,8 +6,8 @@ $ErrorActionPreference = "Stop"
 
 $brainRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $workspaceBase = Split-Path $brainRoot -Parent
-$pluginRoot = "C:\Users\Cleudson\.gemini\config\plugins\shapelab-os"
-$legacyPluginRoot = "C:\Users\Cleudson\.gemini\config\plugins\cleudson-devkit"
+$pluginRoot = Join-Path $HOME ".gemini\config\plugins\shapelab-os"
+$legacyPluginRoot = Join-Path $HOME ".gemini\config\plugins\cleudson-devkit"
 
 $script:failures = 0
 $script:warnings = 0
@@ -58,14 +58,15 @@ if (Test-Path $pluginRoot) {
     try {
         $hJson = Get-Content $hooksJsonPath -Raw -Encoding UTF8 | ConvertFrom-Json
         $hookScriptsOk = $true
-        foreach ($hs in @("hooks\session_start.ps1", "hooks\post_tool_observer.ps1", "hooks\stop_auto_learn.ps1")) {
+        $expectedHooks = @("hooks\session_start.ps1", "hooks\pre_tool_firewall.ps1", "hooks\post_tool_observer.ps1", "hooks\stop_auto_learn.ps1")
+        foreach ($hs in $expectedHooks) {
             if (-not (Test-Path (Join-Path $pluginRoot $hs))) {
                 $hookScriptsOk = $false
                 Report-Check "FAIL" "Hooks" "Script ausente: $hs"
             }
         }
         if ($hookScriptsOk) {
-            Report-Check "OK" "Hooks" "hooks.json válido e 3 scripts de lifecycle presentes"
+            Report-Check "OK" "Hooks" "hooks.json válido e $($expectedHooks.Count) scripts de lifecycle presentes"
         }
     } catch {
         Report-Check "FAIL" "Hooks" "hooks.json inválido ou ausente"

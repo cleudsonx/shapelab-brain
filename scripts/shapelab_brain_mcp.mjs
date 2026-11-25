@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import fsp from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import readline from "node:readline";
 import { execFile, execFileSync } from "node:child_process";
@@ -18,7 +19,7 @@ const execFileAsync = promisify(execFile);
 
 const DEFAULT_BRAIN_ROOT =
   process.env.SHAPELAB_BRAIN_ROOT ||
-  "c:\\Users\\Cleudson\\OneDrive\\Documentos\\PROJETOS 2026\\shapelab-brain";
+  path.join(os.homedir(), "OneDrive", "Documentos", "PROJETOS 2026", "shapelab-brain");
 
 const ALLOWED_PRODUCTS = new Set(["B2B-personal-ia", "ReformAI", "Smart-EV-Hub"]);
 const DEFAULT_PRODUCTS = ["B2B-personal-ia", "ReformAI", "Smart-EV-Hub"];
@@ -789,7 +790,6 @@ function buildCockpitHtml(injectedData = null) {
   const candidatePaths = [
     path.join(path.dirname(fileURLToPath(import.meta.url)), "cockpit_app.html"),
     path.join(DEFAULT_BRAIN_ROOT, "scripts", "cockpit_app.html"),
-    "C:\\Users\\Cleudson\\.gemini\\antigravity\\brain\\6de40630-d886-4f90-996a-c7ddd129afa1\\shapelab_founder_cockpit.html",
   ];
 
   for (const p of candidatePaths) {
@@ -986,7 +986,7 @@ rl.on("line", async (line) => {
             tools: {},
             resources: { subscribe: false, listChanged: false },
           },
-          serverInfo: { name: "shapelab-brain-mcp", version: "2.0.0" },
+          serverInfo: { name: "shapelab-brain-mcp", version: "3.8.0" },
         },
       });
     }
