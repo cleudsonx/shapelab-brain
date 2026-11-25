@@ -1,12 +1,14 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
+  "brand_architecture": "house_of_brands_with_venture_endorsement",
   "brand": {
     "name": "ShapeLab",
     "legal_display": "ShapeLab — AI Venture Builder",
     "tagline": "AI VENTURE BUILDER",
     "domain": "https://shapelab.ia.br",
     "plugin_id": "shapelab-os",
-    "plugin_display_name": "ShapeLab OS"
+    "plugin_display_name": "ShapeLab OS",
+    "scope_policy": "A marca ShapeLab (Prism S Neon) pertence exclusivamente à Venture Builder/Plataforma e ao selo discreto de rodapé/lojas; nunca substitui ícones, nomes, paletas ou criativos publicitários próprios de cada produto."
   },
   "assets": {
     "logo_square": {
@@ -15,10 +17,13 @@
       "aspect_ratio": "1:1",
       "recommended_uses": [
         "Plugin icon (assets/logo.png)",
-        "Favicon (16x16, 32x32, 48x48)",
-        "PWA icons (192x192, 512x512, maskable)",
-        "Android Adaptive Icon & iOS AppIcon (180x180, 1024x1024)",
-        "Splash screen center mark"
+        "Venture Builder portal favicon & PWA (shapelab.ia.br)",
+        "Founder Cockpit institutional badge",
+        "Discrete micro-seal inside product footers (<= 16px) alongside product brand"
+      ],
+      "prohibited_uses": [
+        "Replacing commercial product AppIcon (Google Play / Apple App Store)",
+        "Replacing commercial product advertising creatives or hero logos"
       ]
     },
     "banner_wide": {
@@ -27,10 +32,61 @@
       "aspect_ratio": "16:9",
       "min_width_px": 240,
       "recommended_uses": [
-        "GitHub README.md hero banner",
-        "OpenGraph (og:image) & Twitter summary_large_image (1200x630)",
-        "Institutional hero headers & pitch decks"
+        "ShapeLab Brain GitHub README.md hero banner",
+        "Venture Builder OpenGraph (og:image) for shapelab.ia.br",
+        "Institutional pitch decks & platform portal headers"
       ]
+    }
+  },
+  "product_identities": {
+    "B2B-personal-ia": {
+      "commercial_name": "Mr. Coach",
+      "domain_theme": "Fitness, Performance & Biomechanical AI (Modern Editorial Clean / Apple Fitness & Whoop Style)",
+      "preserve_own_app_icon": true,
+      "preserve_own_ad_creatives": true,
+      "preserve_own_palette": true,
+      "footer_endorsement": "Mr. Coach • Um produto ShapeLab (shapelab.ia.br)"
+    },
+    "ReformAI": {
+      "commercial_name": "ReformAI",
+      "sub_brands": ["RestituiAI", "SplitFácil AI", "TratoJusto AI"],
+      "domain_theme": "Fiscal Intelligence LC 214/2025 & B2B Split Payments",
+      "preserve_own_app_icon": true,
+      "preserve_own_ad_creatives": true,
+      "preserve_own_palette": true,
+      "footer_endorsement": "ReformAI • Um produto ShapeLab (shapelab.ia.br)"
+    },
+    "Smart-EV-Hub": {
+      "commercial_name": "Smart EV Hub",
+      "domain_theme": "EV Battery Forensics, WORM Digital Passport & Automotive B2B2C High-Contrast Daylight UI",
+      "preserve_own_app_icon": true,
+      "preserve_own_ad_creatives": true,
+      "preserve_own_palette": true,
+      "footer_endorsement": "Smart EV Hub — A ShapeLab Venture (shapelab.ia.br)"
+    }
+  },
+  "store_compliance": {
+    "apple_app_store": {
+      "guidelines": ["2.3.7 Accurate Metadata", "4.3 Spam / Design Differentiation"],
+      "app_name_and_subtitle": "Exclusivo da marca comercial do produto (não prefixar com 'ShapeLab -')",
+      "app_icon_1024": "Exclusivo do produto, opaco (sem canal alpha), sem textos promocionais",
+      "screenshots": "UI real e identidade exclusiva do produto",
+      "venture_builder_attribution": {
+        "seller_name": "ShapeLab",
+        "copyright": "© 2026 ShapeLab AI Venture Builder",
+        "description_footer": "Desenvolvido por ShapeLab — AI Venture Builder (shapelab.ia.br)"
+      }
+    },
+    "google_play_store": {
+      "policies": ["Store Listing & Metadata", "Impersonation & Icon Safe Zone"],
+      "app_title_max_30": "Exclusivo da marca comercial do produto",
+      "hi_res_icon_512_and_adaptive": "Exclusivo do produto; arte principal dentro dos 66% centrais (safe zone)",
+      "feature_graphic_1024x500_and_ads": "Identidade visual e criativos próprios do produto",
+      "venture_builder_attribution": {
+        "developer_account_name": "ShapeLab",
+        "developer_website": "https://shapelab.ia.br",
+        "in_app_footer": "Um produto ShapeLab — AI Venture Builder"
+      }
     }
   },
   "palette": {
@@ -48,23 +104,19 @@
     "neon_glow_css": "drop-shadow(0 0 18px rgba(16, 185, 129, 0.35)) drop-shadow(0 0 28px rgba(6, 182, 212, 0.25))"
   },
   "targets": {
-    "web_seo": {
+    "venture_web_seo": {
       "theme_color": "#090D16",
       "favicon_sizes_px": [16, 32, 48],
       "apple_touch_icon_px": 180,
       "og_image_recommended_px": [1200, 630]
     },
-    "pwa": {
-      "background_color": "#090D16",
-      "theme_color": "#090D16",
-      "icon_sizes_px": [192, 512],
-      "maskable_safe_zone_ratio": 0.66
-    },
-    "mobile": {
-      "android_adaptive_background": "#090D16",
-      "ios_opaque_background": "#090D16",
-      "splash_background": "#090D16"
+    "mobile_stores": {
+      "apple_app_icon_px": 1024,
+      "apple_alpha_channel_allowed": false,
+      "google_hi_res_icon_px": 512,
+      "google_feature_graphic_px": [1024, 500],
+      "adaptive_maskable_safe_zone_ratio": 0.66
     }
   },
-  "ai_reproduction_prompt": "Preserve exactly the ShapeLab Prism S monogram (interlocking geometric S sculpted from folded metallic-glass ribbons with emerald #10B981 to electric cyan #06B6D4 neon glow on #090D16 obsidian background). Pair with crisp uppercase geometric sans-serif 'SHAPELAB' (#F8FAFC) and tracked subtitle 'AI VENTURE BUILDER' (#94A3B8)."
+  "ai_reproduction_prompt": "For ShapeLab Venture Builder institutional assets only (never overwrite individual product icons or ad creatives): Preserve the ShapeLab Prism S monogram (interlocking geometric S sculpted from folded metallic-glass ribbons with emerald #10B981 to electric cyan #06B6D4 neon glow on #090D16 obsidian background) paired with uppercase sans-serif 'SHAPELAB' (#F8FAFC) and subtitle 'AI VENTURE BUILDER' (#94A3B8)."
 }

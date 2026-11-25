@@ -24,7 +24,7 @@
 | Banco Multi-tenant, Supabase RLS Anti-Recursão e Storage Privado LGPD | `skills/backend/supabase_rls.md` | `production-verified` | `B2B-personal-ia` |
 | Mensageria WhatsApp Dual-Channel (Meta Cloud Oficial + Fallback Evolution API) | `skills/growth/whatsapp_dual_channel.md` | `production-verified` | `B2B-personal-ia` |
 | Versionamento Monotônico (`YYYYMMDDNN`), Anti-Cache PWA/OTA e SemVer CI/CD | `skills/devops/versioning_and_ota_update.md` | `production-verified` | `B2B-personal-ia` / `ReformAI` |
-| Identidade Visual ShapeLab (Prism S Neon), Tokens, SEO, PWA & App Icons | `skills/brand/shapelab_brand_identity.md` | `production-verified` | `shapelab-brain` |
+| Arquitetura House of Brands (Brand Própria por Produto + Endosso Rodapé/Lojas & Prism S da Venture Builder) | `skills/brand/shapelab_brand_identity.md` | `production-verified` | `shapelab-brain` |
 | Deep Healthcheck, Sanitização HTTP 500, Crash Shield Flutter e Backup Supabase | `skills/sre/observability_crash_shield_and_backup.md` | `production-verified` | `shapelab-brain` |
 | Deploy Stateless no Cloud Run (`southamerica-east1`), Graceful Shutdown e Cutover Blue-Green | `skills/devops/cloud_run_stateless_cutover.md` | `production-verified` | `shapelab-brain` / `Smart-EV-Hub` |
 | Assinatura Criptográfica JWS (RFC 7515) para Transações/Termos e Isolamento Estrito Demo | `skills/security/jws_terms_and_demo_isolation.md` | `production-verified` | `shapelab-brain` |

@@ -137,14 +137,14 @@ ${desc}
 
 [![ShapeLab Preflight](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml/badge.svg)](https://github.com/cleudsonx/${cleanName}/actions/workflows/ci_preflight.yml)
 [![ShapeLab Brain](https://img.shields.io/badge/ShapeLab%20Brain-v${brainVer}-10B981?style=flat-square&logo=git)](https://github.com/cleudsonx/shapelab-brain)
-[![Design System](https://img.shields.io/badge/Design%20System-Prism%20S%20Neon-06B6D4?style=flat-square)](https://shapelab.ia.br)
+[![Venture Builder](https://img.shields.io/badge/Venture%20Builder-ShapeLab%20IA-06B6D4?style=flat-square)](https://shapelab.ia.br)
 
 ---
 
 ## 🚀 Arquitetura & Governança
 - **Submódulo Central:** \`.shapelab/\` gerido via \`scripts/brain_sync.ps1\` com travas SemVer.
 - **Segurança Fail-Closed:** Preflight CI Gate ativo para validação estrita de segredos, RLS e JWT.
-- **Identidade Visual:** Tokens Prism S Neon (\`#10B981\` Emerald / \`#06B6D4\` Cyan sobre \`#090D16\` Obsidian).
+- **Identidade de Marca (*House of Brands*):** Este produto possui identidade visual, logotipo, ícone de aplicativo e criativos publicitários 100% próprios, mantendo o endosso institucional discreto no rodapé e nos metadados de publicador (Google Play & Apple App Store): *"Um produto ShapeLab — AI Venture Builder (shapelab.ia.br)"*.
 - **Versionamento:** Monotônico 32-bit safe (\`v0.1.0+${initialBuild}\`).
 `
   );

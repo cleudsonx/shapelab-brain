@@ -2,6 +2,16 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.17.0] - 2026-11-25
+### Alterado
+- **Arquitetura House of Brands & Endosso Institucional (`skills/brand/shapelab_brand_identity.md`, `assets/brand/brand_manifest.json`, `CORE_CONSTITUTION.md`):**
+  - Definida a separação estrita entre a marca institucional da Venture Builder (**ShapeLab — Prism S Neon**) e a identidade comercial exclusiva de cada produto (**Mr. Coach**, **ReformAI**, **Smart EV Hub** e novos SaaS).
+  - Estabelecida regra *Anti-Override* preservando nome, paleta, ícone do aplicativo (`AppIcon` / `Adaptive Icon`), splash screen e criativos publicitários próprios de cada app.
+  - Padronizado o **endosso discreto no rodapé** (`AppVersionFooter` / footer HTML) e nos **metadados das lojas Apple App Store (Guidelines 2.3.7 & 4.3) e Google Play Store** (`Developer/Seller Name: ShapeLab`, `Copyright`, `Privacy Policy` e assinatura no final da descrição).
+- **Matriz de Produtos & Scaffolding (`memory/PRODUCT_MATRIX.md`, `scripts/tools/scaffold_saas.mjs`):**
+  - Atualizada a matriz refletindo 100% de adoção do modelo *House of Brands + Endosso* nos produtos e atualizado o `README.md` gerado para novos SaaS com as regras de autonomia visual e boas práticas de loja.
+  - Índice semântico (`memory/semantic_index.json`) reconstruído para consulta pelas tools MCP.
+
 ## [2.16.0] - 2026-11-25
 ### Adicionado
 - **ShapeLab OS v3.8.0 (`shapelab-os`) & Live Cockpit Server (`scripts/cockpit_server.mjs`):**
