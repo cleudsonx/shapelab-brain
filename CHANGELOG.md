@@ -2,13 +2,29 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
-## [2.18.0] - 2026-11-25
+## [2.19.0] - 2026-11-25
 ### Adicionado
 - **Skill de Token FinOps & Engenharia de Alta Alavancagem (`skills/ai/token_finops_high_leverage.md` + plugin `shapelab-os`):**
   - Guia completo para maximizar produtividade, qualidade de código, velocidade, assertividade e inovação no pacote **Gemini 4 Pro / Antigravity** e na API Gemini em produção com custo mínimo de tokens.
   - Inclui matriz de roteamento assimétrico (*Think with Pro, Grind with Flash*), higiene da janela de contexto ($O(T^2)$), batching radical por fase, template de prompt Spec-First de alta densidade, estratégias de produção (`Context Caching`, `response_schema`, `thinking_budget`, `Reserve-Execute-Release`) e checklist operacional.
 - **Governança & Indexação (`INDEX.md`, `memory/PRODUCT_MATRIX.md`, `memory/semantic_index.json`):**
   - Skill catalogada em `INDEX.md`, marcada como ativa nos 3 produtos via plugin `shapelab-os` e indexada no motor semântico.
+
+## [2.18.0] - 2026-11-25
+### Adicionado & Componentização UI Cross-Produtos (`LL-016`)
+- **Developer Terminal Widget Modular (Padrão macOS / Big Tech):**
+  - Criação do template HTML autocontido `templates/ui/developer_terminal_widget.html` e da factory JavaScript vanilla `templates/ui/developer_terminal_widget.js` (`createDeveloperTerminal()`), sem nenhuma dependência externa e estilizados com Tailwind CSS + Prism S Neon.
+  - Suporte a abas dinâmicas de linguagens (`cURL`, `Node.js`, `Python`, `200 OK Response`), botão de cópia com Clipboard API nativa e feedback visual, e telemetria de latência Edge/JWS com pulso animado.
+  - Documentação da Skill Oficial em `skills/ui/developer_terminal_widget.md` com guia de integração para `B2B-personal-ia` (Webhooks WhatsApp/Asaas), `Smart-EV-Hub` (APIs OCPP) e novos SaaS.
+  - Registro da Lição Aprendida `LL-016` em `memory/LESSONS_LEARNED.md` e atualização da matriz de adoção em `memory/PRODUCT_MATRIX.md`.
+  - Reconstrução do índice semântico (`memory/semantic_index.json`).
+
+## [2.17.2] - 2026-11-25
+### Corrigido & Segurança de Mensageria (`LL-015`)
+- **Guardrail de Onboarding e Validação Temporal de Convites em Webhooks:**
+  - Padronizada a validação temporal estrita de convites pendentes (`expires_at > NOW()`) na identificação de remetentes de mensageria (WhatsApp/SMS).
+  - Implementado Guardrail de Onboarding *fail-closed* que intercepta interações e cliques de botões de convidados não cadastrados, orientando a ativação pelo link oficial do convite sem executar regras de negócio nem poluir o painel do profissional.
+  - Registrada a lição aprendida `LL-015` em `memory/LESSONS_LEARNED.md`.
 
 ## [2.17.1] - 2026-11-25
 ### Corrigido & Blindagem FinOps CI/CD (`LL-014`)
