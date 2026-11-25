@@ -2,6 +2,15 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.18.0] - 2026-11-25
+### Adicionado & Componentização UI Cross-Produtos (`LL-016`)
+- **Developer Terminal Widget Modular (Padrão macOS / Big Tech):**
+  - Criação do template HTML autocontido `templates/ui/developer_terminal_widget.html` e da factory JavaScript vanilla `templates/ui/developer_terminal_widget.js` (`createDeveloperTerminal()`), sem nenhuma dependência externa e estilizados com Tailwind CSS + Prism S Neon.
+  - Suporte a abas dinâmicas de linguagens (`cURL`, `Node.js`, `Python`, `200 OK Response`), botão de cópia com Clipboard API nativa e feedback visual, e telemetria de latência Edge/JWS com pulso animado.
+  - Documentação da Skill Oficial em `skills/ui/developer_terminal_widget.md` com guia de integração para `B2B-personal-ia` (Webhooks WhatsApp/Asaas), `Smart-EV-Hub` (APIs OCPP) e novos SaaS.
+  - Registro da Lição Aprendida `LL-016` em `memory/LESSONS_LEARNED.md` e atualização da matriz de adoção em `memory/PRODUCT_MATRIX.md`.
+  - Reconstrução do índice semântico (`memory/semantic_index.json`).
+
 ## [2.17.2] - 2026-11-25
 ### Corrigido & Segurança de Mensageria (`LL-015`)
 - **Guardrail de Onboarding e Validação Temporal de Convites em Webhooks:**

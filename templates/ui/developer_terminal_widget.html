@@ -1,0 +1,60 @@
+<!--
+  =============================================================================================
+  ShapeLab OS — Developer Terminal Widget Template (Prism S Neon / macOS Big Tech Standard)
+  =============================================================================================
+  Origem: ReformAI Developer Hub & Onboarding Flow
+  Compatibilidade: Tailwind CSS v3 / v4 + Vanilla HTML/JS
+  Design Tokens: Prism S Neon (#090D16, #10B981, #06B6D4, #6366F1, #F59E0B)
+  =============================================================================================
+-->
+
+<div id="dev-terminal-wrapper" class="bg-[#0B0F19] text-slate-200 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden font-mono text-xs flex flex-col transition-all">
+  <!-- BARRA DE TÍTULO ESTILO MACOS + SELETOR DE LINGUAGEM -->
+  <div class="bg-[#111827] px-4 py-2.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 select-none">
+    <div class="flex items-center gap-2">
+      <!-- Window Controls (macOS Dots) -->
+      <div class="flex gap-1.5" aria-hidden="true">
+        <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 hover:opacity-100 transition"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 hover:opacity-100 transition"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 hover:opacity-100 transition"></span>
+      </div>
+      <!-- Endpoint Route Tag -->
+      <span id="terminal-endpoint-tag" class="text-[11px] font-semibold text-slate-300 ml-1">
+        POST /api/v1/endpoint
+      </span>
+    </div>
+
+    <!-- Tabs: cURL | Node.js | Python | Response 200 OK -->
+    <div class="flex items-center gap-1 bg-slate-900/90 p-0.5 rounded-lg border border-slate-800 text-[10px]">
+      <button type="button" id="tab-curl" onclick="switchTerminalTab('curl')" class="px-2.5 py-1 rounded-md bg-indigo-600 text-white font-bold transition cursor-pointer">cURL</button>
+      <button type="button" id="tab-node" onclick="switchTerminalTab('node')" class="px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition cursor-pointer">Node</button>
+      <button type="button" id="tab-python" onclick="switchTerminalTab('python')" class="px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition cursor-pointer">Python</button>
+      <button type="button" id="tab-response" onclick="switchTerminalTab('response')" class="px-2.5 py-1 rounded-md text-emerald-400 hover:text-emerald-300 font-semibold transition cursor-pointer flex items-center gap-1">
+        <span>⚡</span> <span>200 OK</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BLOCO DE CÓDIGO COM BOTÃO DE CÓPIA RÁPIDA -->
+  <div class="p-4 bg-[#0B0F19] relative group">
+    <button type="button" id="btn-terminal-copy" onclick="copyTerminalSnippet()" class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/80 text-[10px] flex items-center gap-1.5 transition shadow-sm cursor-pointer z-10" title="Copiar código">
+      <span id="copy-terminal-icon">📋</span> <span id="copy-terminal-label">Copiar</span>
+    </button>
+    <pre id="terminal-code-block" class="text-slate-300 text-[11px] leading-relaxed overflow-x-auto whitespace-pre selection:bg-indigo-500/30 pr-16 font-mono"></pre>
+  </div>
+
+  <!-- RODAPÉ DE TELEMETRIA EDGE & STATUS -->
+  <div class="bg-[#0e1422] px-4 py-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 select-none">
+    <div class="flex items-center gap-3">
+      <span class="flex items-center gap-1 text-emerald-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        Latência: <strong id="terminal-latency-val" class="text-slate-200">11ms</strong>
+      </span>
+      <span class="text-slate-600">|</span>
+      <span>Assinatura: <strong id="terminal-sig-val" class="text-sky-400 font-semibold">ES256 OK</strong></span>
+    </div>
+    <button type="button" onclick="toggleTerminalResponse()" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 font-semibold text-[10px] flex items-center gap-1 transition cursor-pointer">
+      <span>▶</span> <span id="btn-toggle-response-label">Ver Resposta</span>
+    </button>
+  </div>
+</div>

@@ -29,6 +29,7 @@ Legenda: ✅ Em produção / ativo | 🟡 Parcial / em evolução | ⏳ Pendente
 | `skills/sre/observability_crash_shield_and_backup.md` (Deep Health + HTTP 500 Shield) | 🟡 (Crash Shield Web) | 🟡 (Healthcheck) | 🟡 (Deep Ready / Crash Shield) | ⏳ Planejado |
 | `skills/devops/cloud_run_stateless_cutover.md` (Cloud Run `southamerica-east1` + Blue-Green) | ➖ (Render) | 🟡 (Docker OCI) | ✅ (Cloud Run Deploy) | ⏳ Planejado |
 | `skills/security/jws_terms_and_demo_isolation.md` (JWS RFC 7515 + Isolamento Demo RLS) | ✅ (Asaas Split JWS) | 🟡 (Escrow JWS) | 🟡 (Passaporte WORM) | ⏳ Planejado |
+| `skills/ui/developer_terminal_widget.md` (macOS Terminal Widget + Live Snippets) | ⏳ Pendente (Webhooks WA) | ✅ Origem (`portal_desenvolvedor.html`, `landing_page_reformai.html`, `onboarding_reformai.html`) | ⏳ Pendente (APIs OCPP) | ⏳ Planejado |
 
 ---
 
