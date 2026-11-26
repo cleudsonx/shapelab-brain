@@ -20,16 +20,16 @@ Legenda: ✅ Em produção / ativo | 🟡 Parcial / em evolução | ⏳ Pendente
 | :--- | :---: | :---: | :---: | :---: |
 | `skills/payments/asaas_split.md` (BCB 4893 + JWS + WORM) | ✅ Origem | ✅ (Asaas + Escrow) | 🟡 (Dual-Gateway Asaas + Efí) | ⏳ Planejado |
 | `skills/security/auth_anti_takeover.md` (Guards, PBKDF2/Argon2, AAL2) | ✅ Origem | ✅ (`_guard.ts` + PBKDF2 + `node-rbac-guard.ts` \| P3.2/P3.3/P3.4) | 🟡 (RBAC B2B2C) | ⏳ Planejado |
-| `skills/security/auth_anti_takeover.md#6` (WebAuthn L3 Passkeys CBOR/COSE + `signCount`) | ⏳ Pendente (AAL2 Passkeys) | ✅ (`cbor-webauthn` + D1) | ⏳ Pendente (B2B2C Mobile) | ⏳ Planejado |
+| `skills/security/auth_anti_takeover.md#6` (WebAuthn L3 Passkeys CBOR/COSE + `signCount`) | ⏳ Pendente (AAL2 Passkeys) | ✅ (`cbor-webauthn` + D1) | ✅ (`webauthn_service.py` + Migration `006`) | ⏳ Planejado |
 | `skills/ui/flutter_edge_to_edge.md` (Edge-to-Edge + Dual-Theme WCAG) | ✅ Origem | ➖ (Web/Edge) | 🟡 (Flutter Cockpit) | ⏳ Planejado |
 | `skills/backend/supabase_rls.md` (Multi-tenant RLS + Storage LGPD) | ✅ Origem | 🟡 (D1 + Supabase PostGIS \| P3.2/P3.3/P3.4) | 🟡 (Multi-Actor B2B2C) | ⏳ Planejado |
-| `skills/growth/whatsapp_dual_channel.md` (Meta Cloud + Evolution) | ✅ Origem | ✅ (Notificações WA) | ⏳ Pendente | ⏳ Planejado |
+| `skills/growth/whatsapp_dual_channel.md` (Meta Cloud + Evolution) | ✅ Origem | ✅ (Notificações WA) | ✅ (`whatsapp_dual_channel.py` Meta + Evolution) | ⏳ Planejado |
 | `skills/devops/versioning_and_ota_update.md` (`YYYYMMDDNN` + `SemVer+SHA`) | ✅ Origem (Flutter/PWA) | ✅ Origem (`version.py`) | ✅ (`update_version.dart` + `version.py`) | ⏳ Planejado |
 | `skills/brand/shapelab_brand_identity.md` (House of Brands + Endosso Rodapé/Lojas) | ✅ (Brand Própria Mr. Coach + Endosso Rodapé/Lojas) | ✅ (Brand Própria LC 214 + Endosso Rodapé) | ✅ (Brand Própria EV B2B2C + Endosso Rodapé/Lojas) | ⏳ Planejado |
 | `skills/sre/observability_crash_shield_and_backup.md` (Deep Health + HTTP 500 Shield) | 🟡 (Crash Shield Web) | 🟡 (Healthcheck) | 🟡 (Deep Ready / Crash Shield) | ⏳ Planejado |
 | `skills/devops/cloud_run_stateless_cutover.md` (Cloud Run `southamerica-east1` + Blue-Green) | ➖ (Render) | 🟡 (Docker OCI) | ✅ (Cloud Run Deploy) | ⏳ Planejado |
 | `skills/security/jws_terms_and_demo_isolation.md` (JWS RFC 7515 + Isolamento Demo RLS) | ✅ (Asaas Split JWS) | 🟡 (Escrow JWS) | 🟡 (Passaporte WORM) | ⏳ Planejado |
-| `skills/ui/developer_terminal_widget.md` (macOS Terminal Widget + Live Snippets) | ⏳ Pendente (Webhooks WA) | ✅ Origem (`portal_desenvolvedor.html`, `landing_page_reformai.html`, `onboarding_reformai.html`) | ⏳ Pendente (APIs OCPP) | ⏳ Planejado |
+| `skills/ui/developer_terminal_widget.md` (macOS Terminal Widget + Live Snippets) | ⏳ Pendente (Webhooks WA) | ✅ Origem (`portal_desenvolvedor.html`, `landing_page_reformai.html`, `onboarding_reformai.html`) | ✅ (`mobile/web/developers/` Prism S) | ⏳ Planejado |
 | `skills/ai/token_finops_high_leverage.md` (Token FinOps Gemini 4 Pro + Context Engineering) | ✅ (Plugin `shapelab-os`) | ✅ (Plugin `shapelab-os`) | ✅ (Plugin `shapelab-os`) | ⏳ Planejado |
 
 ---

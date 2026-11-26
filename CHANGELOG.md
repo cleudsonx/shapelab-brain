@@ -2,6 +2,11 @@
 
 Todas as evoluções notáveis do Shapelab Agent OS são registradas neste arquivo seguindo Semantic Versioning (`VERSION`).
 
+## [2.19.1] - 2026-11-26
+### Alterado
+- **Matriz de Produtos (`memory/PRODUCT_MATRIX.md`):**
+  - Atualizado o status do `Smart-EV-Hub` para `✅` em `auth_anti_takeover.md#6` (`webauthn_service.py` + Migration `006`), `whatsapp_dual_channel.md` (`whatsapp_dual_channel.py` Meta + Evolution) e `developer_terminal_widget.md` (`mobile/web/developers/` Prism S).
+
 ## [2.19.0] - 2026-11-25
 ### Adicionado
 - **Skill de Token FinOps & Engenharia de Alta Alavancagem (`skills/ai/token_finops_high_leverage.md` + plugin `shapelab-os`):**
